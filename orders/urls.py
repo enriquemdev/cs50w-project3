@@ -12,4 +12,6 @@ urlpatterns = [
     
     path("", views.menu, name="menu"),
     path("pizza_price", views.pizza_price, name="pizza_price"),
+    path("add_pizza_cart", views.add_pizza_cart, name="add_pizza_cart"),
+
 ]

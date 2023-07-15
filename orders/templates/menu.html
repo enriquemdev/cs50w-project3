@@ -447,8 +447,9 @@
         function updatePizzaData(valid, response) {
             if (valid) {
                 selectedPizzaPrice = response.price;
-                selectedPizzaProduct = response.product;
-                selectedPizzaDetail = response.detail;
+                selectedPizzaProduct = response.product_id;
+                selectedPizzaDetail = response.detail_id;
+                //console.log(response.price)
                 pizzaPriceText.innerHTML = "$ " + selectedPizzaPrice;
                 pizzaSubmitButton.style.display = "block";
             } else {
@@ -589,9 +590,9 @@
                 };
 
                 console.log(requestData);
-                /*
+                
                 $.ajax({
-                    url: '/pizza_price',
+                    url: '/add_pizza_cart',
                     type: 'POST',
                     data: requestData,
                     dataType: 'json',
@@ -599,17 +600,22 @@
                         'X-CSRFToken': '{{ csrf_token }}'
                     },
                     success: function (response) {
-                        // Maneja la respuesta exitosa
-                        console.log(response.price);
-                        updatePizzaData(true, response);
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
                     },
                     error: function (xhr, status, error) {
-                        // Maneja el error
-                        console.error(error);
-                        updatePizzaData(false, error);
-
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
                     }
-                });*/
+                });
+
+
                
             }
         })

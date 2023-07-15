@@ -126,46 +126,32 @@ def pizza_price(request):
     
 def add_pizza_cart(request):
     if request.method == 'POST':
-        user_id = request.user.id
-        size_id = request.POST.get('pizza_size')
-        pizza_type_id = request.POST.get('pizza_type')
-        toppings_count = request.POST.get('toppings_count')
-        
-        # print(size_id, pizza_type_id, toppings_count)
-        # print()
-        try:
-            product_type = ProductType.objects.get(name='Pizza')
-        except ProductType.DoesNotExist:
-            return JsonResponse({'price': '1'})
+        product_instance = Product.objects.get(pk=request.POST.get('product_id'))
+        # product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+        toppings = request.POST.getlist('toppings[]')
 
         try:
-            toppings_count_obj = ToppingCount.objects.get(toppings_count=toppings_count)
-        except ToppingCount.DoesNotExist:
-            return JsonResponse({'price': '2'})
-
-        try:
-            # print(size_id, pizza_type_id, toppings_count_obj.id, product_type.id)
-            # print()
-
-            pizza_detail = PizzaDetail.objects.get(
-                # product_id=product_type.id,
-                pizza_type=pizza_type_id,
-                pizza_size=size_id,
-                toppings_count=toppings_count_obj.id
+            new_cart = Cart(
+                user_id=request.user,
+                product_id=product_instance,
+                quantity=quantity
             )
             
-            # result = {
-            #     'name': pizza_detail.product_id.name,
-            #     'pizza_type': pizza_detail.pizza_type.name,
-            #     'pizza_size': pizza_detail.pizza_size.name,
-            #     'toppings_count': pizza_detail.toppings_count.toppings_count,
-            #     'price': pizza_detail.product_id.price
-            # }
-
-            return JsonResponse({'price': pizza_detail.product_id.price})
+            new_cart.save()
             
-        except PizzaDetail.DoesNotExist:
-            return JsonResponse({'price': '3'})
+            if toppings != None:                       
+                for i in toppings:
+                    topping_instance = Topping.objects.get(pk=i)
+                    new_topping_cart = ToppingsCart(
+                        cart_id=new_cart,
+                        topping_id=topping_instance
+                    )   
+                    new_topping_cart.save()                   
+                                
+            return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
+        except:
+            return JsonResponse({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
 
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
