@@ -74,7 +74,7 @@ class ProductType(models.Model):
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return self.name
+        return f"{self.id}  {self.name}"
 
 class Product(models.Model):
     product_type_id = models.ForeignKey(ProductType, on_delete=models.CASCADE)

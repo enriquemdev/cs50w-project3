@@ -226,7 +226,7 @@
                             </h1>
                         </div>
 
-                        <p class="text-lg font-bold">$119.99</p>
+                        <p id="sub_price" class="text-lg font-bold"></p>
                     </div>
 
                     <div>
@@ -237,16 +237,34 @@
                         </div>
                     </div>
 
-                    <form class="mt-4">
+                    <form class="mt-4" id="sub_form">
+
+                        <fieldset class="mb-3">
+                            <legend class="mb-1 text-md font-medium">Sub Type</legend>
+
+                            <div>
+                                <!-- <label for="sub_type" class="block text-sm font-medium text-gray-900">
+                                  Headliner
+                                </label> -->
+                                <select name="sub_type" id="sub_type"
+                                    class="mt-1.5 p-2 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm" required>
+                                    <option value="">Please select</option>
+                                    {% for sub_type in sub_types %}
+                                        <option value="{{ sub_type.id }}">{{ sub_type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </fieldset>
 
                         <fieldset class="mb-3">
                             <legend class="mb-1 text-md font-medium">Size</legend>
 
                             <div class="flex flex-wrap gap-1">
                                 {% for size in sizes %}
-                                <label for="{{ size.name }}" class="cursor-pointer">
+                                <label for="sub_{{ size.name }}" class="cursor-pointer">
 
-                                    <input type="radio" name="sub_size" id="{{ size.name }}" class="peer sr-only"
+                                    <input type="radio" name="sub_size" id="sub_{{ size.name }}" class="peer sr-only sub_size"
                                         value="{{ size.id }}" />
 
                                     <span
@@ -258,123 +276,27 @@
                             </div>
                         </fieldset>
 
-                        <fieldset>
-                            <legend class="mb-1 text-sm font-medium">Color</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                <label for="color_tt" class="cursor-pointer">
-                                    <input type="radio" name="color" id="color_tt" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        Texas Tea
-                                    </span>
-                                </label>
-
-                                <label for="color_fr" class="cursor-pointer">
-                                    <input type="radio" name="color" id="color_fr" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        Fiesta Red
-                                    </span>
-                                </label>
-
-                                <label for="color_cb" class="cursor-pointer">
-                                    <input type="radio" name="color" id="color_cb" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        Cobalt Blue
-                                    </span>
-                                </label>
-                            </div>
-                        </fieldset>
-
                         <fieldset class="mt-4">
-                            <legend class="mb-1 text-sm font-medium">Size</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                <label for="size_xs" class="cursor-pointer">
-                                    <input type="radio" name="size" id="size_xs" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        XS
-                                    </span>
-                                </label>
-
-                                <label for="size_s" class="cursor-pointer">
-                                    <input type="radio" name="size" id="size_s" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        S
-                                    </span>
-                                </label>
-
-                                <label for="size_m" class="cursor-pointer">
-                                    <input type="radio" name="size" id="size_m" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        M
-                                    </span>
-                                </label>
-
-                                <label for="size_l" class="cursor-pointer">
-                                    <input type="radio" name="size" id="size_l" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        L
-                                    </span>
-                                </label>
-
-                                <label for="size_xl" class="cursor-pointer">
-                                    <input type="radio" name="size" id="size_xl" class="peer sr-only" />
-
-                                    <span
-                                        class="group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        XL
-                                    </span>
-                                </label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="mt-4">
-                            <legend class="mb-1 text-sm font-medium">Size</legend>
+                            <legend class="mb-3 text-md font-medium">Extras</legend>
+                            <!--    <p class="mb-3 text-xs font-small">Select up to 4 toppings</p> -->
                             <div class="flex flex-wrap gap-5">
-
+                                {% for extra in extras %}
                                 <div class="flex flex-wrap gap-1 w-48">
-                                    <label for="AcceptConditions" class="relative h-8 w-14 cursor-pointer">
+                                    <label for="{{ extra.name }}" class="relative h-6 w-11 cursor-pointer">
 
-                                        <input type="checkbox" id="AcceptConditions" class="peer sr-only" />
+                                        <input type="checkbox" id="{{ extra.name }}" class="peer sr-only extra"
+                                            value="{{ extra.id }}" />
 
                                         <span
                                             class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
 
                                         <span
-                                            class="absolute inset-y-0 start-0 m-1 h-6 w-6 rounded-full bg-white transition-all peer-checked:start-6"></span>
+                                            class="absolute inset-y-0 start-0 m-1 h-4 w-4 rounded-full bg-white transition-all peer-checked:start-4"></span>
 
                                     </label>
-                                    <span>Peperoni</span>
+                                    <span class="text-sm font-semibold">{{ extra.name }}</span>
                                 </div>
-
-                                <div class="flex flex-wrap gap-1 w-48">
-                                    <label for="AcceptConditions" class="relative h-8 w-14 cursor-pointer">
-
-                                        <input type="checkbox" id="AcceptConditions" class="peer sr-only" />
-
-                                        <span
-                                            class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
-
-                                        <span
-                                            class="absolute inset-y-0 start-0 m-1 h-6 w-6 rounded-full bg-white transition-all peer-checked:start-6"></span>
-
-                                    </label>
-                                    <span>Barbecue Chicken</span>
-                                </div>
+                                {% endfor %}
 
                             </div>
 
@@ -384,11 +306,11 @@
                             <div>
                                 <label for="quantity" class="sr-only">Qty</label>
 
-                                <input type="number" min="1" value="1"
+                                <input type="number" min="1" value="1" id="sub_quantity"
                                     class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
                             </div>
 
-                            <button type="submit"
+                            <button type="submit" id="sub_submit" style="display: none;"
                                 class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
                                 Add to Cart
                             </button>
@@ -577,7 +499,7 @@
                 e.preventDefault();
                 let selectedToppings = [];
                 toppingCheckboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {                        
+                    if (checkbox.checked) {
                         selectedToppings.push(checkbox.value);
                     }
                 });
@@ -590,7 +512,7 @@
                 };
 
                 console.log(requestData);
-                
+
                 $.ajax({
                     url: '/add_pizza_cart',
                     type: 'POST',
@@ -614,9 +536,191 @@
                         )
                     }
                 });
+            }
+        })
+
+        /*****************************************************************************************************************/
+
+        let subPriceText = document.getElementById('sub_price');
+        let subSubmitButton = document.getElementById('sub_submit');
+        let selectedSubPrice = 0;
+        let selectedSubProduct = 0;
+        let selectedSubDetail = 0;
+        let selectedExtras = [];
+
+        let subTypeValue = '';
+        let subSizeValue = '';
 
 
-               
+        function updateSubData(response) {
+            if (response.price != 'error') {
+                selectedSubPrice = response.price;
+                selectedSubProduct = response.product_id;
+                selectedSubDetail = response.detail_id;
+                //console.log(response.price)
+                subPriceText.innerHTML = "$ " + selectedSubPrice;
+                subSubmitButton.style.display = "block";
+            } else {
+                selectedSubPrice = 0;
+                subPriceText.innerHTML = "Product not found";
+                subSubmitButton.style.display = "none";
+            }
+        }
+
+        /* Make AJAX request if pizza data ready */
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener todos los elementos de tipo radio con la clase "pizza_type"
+            //const pizzaTypeRadios = document.querySelectorAll('.pizza_type');
+
+            // Obtener todos los elementos de tipo radio con la clase "pizza_size"
+            //const pizzaSizeRadios = document.querySelectorAll('.pizza_size');
+
+            // Obtener todos los checkboxes con la clase "topping"
+            const extraCheckboxes = document.querySelectorAll('.extra');
+
+            
+            // Función para contar los checkboxes seleccionados
+            function countSubSelectedCheckboxes() {
+                let count = 0;
+                extraCheckboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        count++;
+                    }
+                });
+                return count;
+            }
+
+            // Función para realizar la petición AJAX
+            function makeSubAjaxRequest() {
+                // Obtener la cantidad de checkboxes seleccionados
+                console.log("SUB petición AJAX.");
+                //const selectedExtrasCount = countSubSelectedCheckboxes();
+
+                let selectedExtras = [];
+                extraCheckboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        selectedExtras.push(checkbox.value);
+                    }
+                });
+
+                const requestData = {
+                    sub_type: subTypeValue,
+                    sub_size: subSizeValue,
+                    extras: selectedExtras
+                };
+
+                console.log(requestData);
+
+                $.ajax({
+                    url: '/sub_price',
+                    type: 'POST',
+                    data: requestData,
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        // Maneja la respuesta exitosa
+                        console.log(response.price);
+                        updateSubData(response);
+                    },
+                    error: function (xhr, status, error) {
+                        // Maneja el error
+                        console.error(error);
+                        //updateSubData(false, error);
+
+                    }
+                });
+                
+
+            }
+
+            // Función para verificar las condiciones y realizar la petición AJAX
+            function checkSubConditions() {
+                let subTypeSelected = false;
+                let subSizeChecked = false;
+
+                // Obtener el valor del input de pizza_type seleccionado
+                const subTypeInput = document.querySelector('#sub_type');
+
+                console.log('valor de subtype   '+subTypeInput.value);
+                if (subTypeInput.value != "") {
+                    subTypeSelected = true;
+                    subTypeValue = subTypeInput.value;
+                }
+                
+
+                // Obtener el valor del input de pizza_size seleccionado
+                const subSizeInputs = document.querySelectorAll('.sub_size');
+
+                subSizeInputs.forEach((input) => {
+                    if (input.checked) {
+                        subSizeChecked = true;
+                        subSizeValue = input.value;
+                    }
+                });
+
+                console.log(subTypeSelected, subSizeChecked)
+                // Verificar las condiciones
+                if (subTypeSelected && subSizeChecked) {
+                    makeSubAjaxRequest();
+                } else {
+                    console.log("No se cumplen las condiciones para hacer la petición SUB AJAX.");
+                }
+            }
+
+            // Obtener el formulario con el ID "pizza_form"
+            const sub_form = document.getElementById('sub_form');
+
+            // Agregar un evento 'click' al formulario
+            sub_form.addEventListener('click', function (event) {
+                // Verificar si el objetivo del evento es un input dentro del formulario
+                if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
+                    // Verificar las condiciones y realizar la petición AJAX
+                    checkSubConditions();
+                }
+            });
+
+
+            // Pizza add to cart
+
+            sub_form.onsubmit = (e) => {
+                e.preventDefault();
+                
+                let sub_quantity = subForm.querySelector('#sub_quantity').value;
+                //console.log(pizza_quantity);
+                const requestData = {
+                    product_id: selectedSubProduct,
+                    quantity: sub_quantity,
+                    extras: selectedExtras,
+                };
+
+                console.log(requestData);
+
+                $.ajax({
+                    url: '/add_sub_cart',
+                    type: 'POST',
+                    data: requestData,
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
+                    }
+                });
+
             }
         })
     </script>

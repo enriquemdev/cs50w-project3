@@ -65,11 +65,18 @@ def menu(request):
             sizes = Size.objects.all()
             pizza_types = PizzaType.objects.all()
             toppings = Topping.objects.all()
+            sub_types = SubType.objects.all()
             
+            extraType = ProductType.objects.get(pk=3)
+            extras = Product.objects.filter(product_type_id=extraType)
+                
+            print(extraType)
             data = {
                 'sizes': sizes,
                 'pizza_types': pizza_types,
-                'toppings': toppings
+                'toppings': toppings,
+                'sub_types': sub_types,
+                'extras': extras
             }
             return render(request, 'menu.html', data)
     else:
@@ -125,6 +132,76 @@ def pizza_price(request):
     
     
 def add_pizza_cart(request):
+    if request.method == 'POST':
+        product_instance = Product.objects.get(pk=request.POST.get('product_id'))
+        # product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+        toppings = request.POST.getlist('toppings[]')
+
+        try:
+            new_cart = Cart(
+                user_id=request.user,
+                product_id=product_instance,
+                quantity=quantity
+            )
+            
+            new_cart.save()
+            
+            if toppings != None:                       
+                for i in toppings:
+                    topping_instance = Topping.objects.get(pk=i)
+                    new_topping_cart = ToppingsCart(
+                        cart_id=new_cart,
+                        topping_id=topping_instance
+                    )   
+                    new_topping_cart.save()                   
+                                
+            return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
+        except:
+            return JsonResponse({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+    
+def sub_price(request):
+    if request.method == 'POST':
+        size_id = request.POST.get('sub_size')
+        sub_type_id = request.POST.get('sub_type')
+        extras_ids = request.POST.get('extras')
+
+        # try:
+        #     toppings_count_obj = ToppingCount.objects.get(toppings_count=toppings_count)
+        # except ToppingCount.DoesNotExist:
+        #     return JsonResponse({'price': '2'})
+
+        try:
+            sub_detail = SubDetail.objects.get(
+                # product_id=product_type.id,
+                sub_type=sub_type_id,
+                sub_size=size_id,
+            )
+            
+            # this is to make the data serializable
+            product_id = sub_detail.product_id.id  # Extract the primary key
+            price = sub_detail.product_id.price
+            
+            response = {
+                'price': price,
+                'product_id': product_id,
+                'detail_id': sub_detail.id,
+            }
+
+            return JsonResponse(response)
+            
+        except SubDetail.DoesNotExist:
+            return JsonResponse({'price': 'error'})
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+    
+def add_sub_cart(request):
     if request.method == 'POST':
         product_instance = Product.objects.get(pk=request.POST.get('product_id'))
         # product_id = request.POST.get('product_id')
