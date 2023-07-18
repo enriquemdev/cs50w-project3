@@ -247,10 +247,11 @@
                                   Headliner
                                 </label> -->
                                 <select name="sub_type" id="sub_type"
-                                    class="mt-1.5 p-2 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm" required>
+                                    class="mt-1.5 p-2 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                    required>
                                     <option value="">Please select</option>
                                     {% for sub_type in sub_types %}
-                                        <option value="{{ sub_type.id }}">{{ sub_type.name }}</option>
+                                    <option value="{{ sub_type.id }}">{{ sub_type.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -264,8 +265,8 @@
                                 {% for size in sizes %}
                                 <label for="sub_{{ size.name }}" class="cursor-pointer">
 
-                                    <input type="radio" name="sub_size" id="sub_{{ size.name }}" class="peer sr-only sub_size"
-                                        value="{{ size.id }}" />
+                                    <input type="radio" name="sub_size" id="sub_{{ size.name }}"
+                                        class="peer sr-only sub_size" value="{{ size.id }}" />
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -361,8 +362,8 @@
                                 {% for pasta in pastas %}
                                 <label for="sub_{{ pasta.name }}" class="cursor-pointer">
 
-                                    <input type="radio" name="pasta" id="sub_{{ pasta.name }}" class="peer sr-only pasta"
-                                        value="{{ pasta.id }}" />
+                                    <input type="radio" name="pasta" id="sub_{{ pasta.name }}"
+                                        class="peer sr-only pasta" value="{{ pasta.id }}" />
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -392,76 +393,76 @@
         </div>
     </section>
 
-        <!-- SALAD SECTION ********************************************************************** -->
+    <!-- SALAD SECTION ********************************************************************** -->
 
-        <section>
-            <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-                <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                    <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                        <img alt="Les Paul"
-                            src="https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg"
-                            class="aspect-square w-full rounded-xl object-cover" />
-                    </div>
-    
-                    <div class="sticky top-0">
-    
-                        <div class="flex justify-between">
-                            <div class="max-w-[35ch] space-y-2">
-                                <h1 class="text-xl font-bold sm:text-2xl">
-                                    Salad
-                                </h1>
-                            </div>
-    
-                            <p id="sub_price" class="text-lg font-bold"></p>
+    <section>
+        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                    <img alt="Les Paul"
+                        src="https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg"
+                        class="aspect-square w-full rounded-xl object-cover" />
+                </div>
+
+                <div class="sticky top-0">
+
+                    <div class="flex justify-between">
+                        <div class="max-w-[35ch] space-y-2">
+                            <h1 class="text-xl font-bold sm:text-2xl">
+                                Salad
+                            </h1>
                         </div>
-    
-                        <div>
-                            <div class="prose max-w-none">
-                                <p>
-                                    Select the salad flavor that fits your needs and desires
-                                </p>
-                            </div>
-                        </div>
-    
-                        <form class="mt-4" id="salad_form">
-    
-                            <fieldset class="mb-3">
-                                <legend class="mb-1 text-md font-medium">Flavor</legend>
-    
-                                <div class="flex flex-wrap gap-1">
-                                    {% for salad in salads %}
-                                    <label for="sub_{{ salad.name }}" class="cursor-pointer">
-    
-                                        <input type="radio" name="salad" id="sub_{{ salad.name }}" class="peer sr-only salad"
-                                            value="{{ salad.id }}" />
-    
-                                        <span
-                                            class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                            {{ salad.name }}
-                                        </span>
-                                    </label>
-                                    {% endfor %}
-                                </div>
-                            </fieldset>
-    
-                            <div class="mt-8 flex gap-4">
-                                <div>
-                                    <label for="quantity" class="sr-only">Qty</label>
-    
-                                    <input type="number" min="1" value="1" id="pasta_quantity"
-                                        class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                                </div>
-    
-                                <button type="submit" id="salad_submit" style="display: none;"
-                                    class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </form>
+
+                        <p id="sub_price" class="text-lg font-bold"></p>
                     </div>
+
+                    <div>
+                        <div class="prose max-w-none">
+                            <p>
+                                Select the salad flavor that fits your needs and desires
+                            </p>
+                        </div>
+                    </div>
+
+                    <form class="mt-4" id="salad_form">
+
+                        <fieldset class="mb-3">
+                            <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                            <div class="flex flex-wrap gap-1">
+                                {% for salad in salads %}
+                                <label for="sub_{{ salad.name }}" class="cursor-pointer">
+
+                                    <input type="radio" name="salad" id="sub_{{ salad.name }}"
+                                        class="peer sr-only salad" value="{{ salad.id }}" />
+
+                                    <span
+                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                        {{ salad.name }}
+                                    </span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                        <div class="mt-8 flex gap-4">
+                            <div>
+                                <label for="quantity" class="sr-only">Qty</label>
+
+                                <input type="number" min="1" value="1" id="pasta_quantity"
+                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                            </div>
+
+                            <button type="submit" id="salad_submit" style="display: none;"
+                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
     <!-- JS SECTION ********************************************************************** -->
     <script>
@@ -762,7 +763,7 @@
                     subTypeSelected = true;
                     subTypeValue = subTypeInput.value;
                 }
-                
+
 
                 // Obtener el valor del input de pizza_size seleccionado
                 const subSizeInputs = document.querySelectorAll('.sub_size');
@@ -798,7 +799,7 @@
 
 
             // Sub add to cart
-            
+
             sub_form.onsubmit = (e) => {
                 e.preventDefault();
                 let sub_quantity = sub_form.querySelector('#sub_quantity').value;
@@ -834,7 +835,148 @@
                         )
                     }
                 });
+            }
+        })
 
+        /*****************************************************************************************************************/
+
+        let pastaPriceText = document.getElementById('sub_price');
+        let pastaSubmitButton = document.getElementById('sub_submit');
+        let selectedPastaPrice = 0;
+        let selectedPastaProduct = 0;
+
+        let pastaTypeValue = '';
+
+
+        function updatePastaData(response) {
+            if (response.price != 'error') {
+                selectedPastaPrice = response.price;
+                selectedPastaProduct = response.product_id;
+
+                pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
+                pastaSubmitButton.style.display = "block";
+            } else {
+                selectedpastaPrice = 0;
+                pastaPriceText.innerHTML = "Product not found";
+                pastaSubmitButton.style.display = "none";
+            }
+        }
+
+        /* Make AJAX request if pizza data ready */
+        document.addEventListener('DOMContentLoaded', function () {
+            // Función para realizar la petición AJAX
+            function makeSubAjaxRequest() {
+                console.log("pasta petición AJAX.");
+
+                const requestData = {
+                    pasta_type: pastaTypeValue,
+                };
+
+                console.log(requestData);
+
+                //AQUIIII
+                $.ajax({
+                    url: '/pasta_price',
+                    type: 'POST',
+                    data: requestData,
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        console.log(response.price);
+                        updateSubData(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+            // Función para verificar las condiciones y realizar la petición AJAX
+            function checkSubConditions() {
+                let subTypeSelected = false;
+                let subSizeChecked = false;
+
+                // Obtener el valor del input de pizza_type seleccionado
+                const subTypeInput = document.querySelector('#sub_type');
+
+                if (subTypeInput.value != "") {
+                    subTypeSelected = true;
+                    subTypeValue = subTypeInput.value;
+                }
+
+
+                // Obtener el valor del input de pizza_size seleccionado
+                const subSizeInputs = document.querySelectorAll('.sub_size');
+
+                subSizeInputs.forEach((input) => {
+                    if (input.checked) {
+                        subSizeChecked = true;
+                        subSizeValue = input.value;
+                    }
+                });
+
+                console.log(subTypeSelected, subSizeChecked)
+                // Verificar las condiciones
+                if (subTypeSelected && subSizeChecked) {
+                    makeSubAjaxRequest();
+                } else {
+                    console.log("No se cumplen las condiciones para hacer la petición SUB AJAX.");
+                }
+            }
+
+            // Obtener el formulario con el ID "pizza_form"
+            const sub_form = document.getElementById('sub_form');
+
+            // Agregar un evento 'click' al formulario
+            sub_form.addEventListener('click', function (event) {
+                // Verificar si el objetivo del evento es un input dentro del formulario
+                if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
+                    // Verificar las condiciones y realizar la petición AJAX
+                    checkSubConditions();
+                    //console.log(selectedExtras)
+                }
+            });
+
+
+            // Sub add to cart
+
+            sub_form.onsubmit = (e) => {
+                e.preventDefault();
+                let sub_quantity = sub_form.querySelector('#sub_quantity').value;
+                //console.log(pizza_quantity);
+                const requestData = {
+                    product_id: selectedSubProduct,
+                    quantity: sub_quantity,
+                    extras: selectedExtras,
+                };
+
+                console.log(requestData);
+
+                $.ajax({
+                    url: '/add_sub_cart',
+                    type: 'POST',
+                    data: requestData,
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            response.type
+                        )
+                    }
+                });
             }
         })
     </script>
