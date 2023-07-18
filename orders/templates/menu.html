@@ -100,7 +100,7 @@
                     <div class="">
                         <div class="prose max-w-none">
                             <p>
-                                Select the the options on each category to make your own ideal pizza.
+                                Select the options on each category to make your own ideal pizza.
                             </p>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                     <div>
                         <div class="prose max-w-none">
                             <p>
-                                Select the the options on each category to make your own ideal sub.
+                                Select the options on each category to make your own ideal sub.
                             </p>
                         </div>
                     </div>
@@ -320,6 +320,148 @@
             </div>
         </div>
     </section>
+
+    <!-- PASTA SECTION ********************************************************************** -->
+
+    <section>
+        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                    <img alt="Les Paul"
+                        src="https://images.immediate.co.uk/production/volatile/sites/30/2021/04/Pasta-alla-vodka-f1d2e1c.jpg"
+                        class="aspect-square w-full rounded-xl object-cover" />
+                </div>
+
+                <div class="sticky top-0">
+
+                    <div class="flex justify-between">
+                        <div class="max-w-[35ch] space-y-2">
+                            <h1 class="text-xl font-bold sm:text-2xl">
+                                Pasta
+                            </h1>
+                        </div>
+
+                        <p id="sub_price" class="text-lg font-bold"></p>
+                    </div>
+
+                    <div>
+                        <div class="prose max-w-none">
+                            <p>
+                                Select the pasta flavor that fits your needs and desires
+                            </p>
+                        </div>
+                    </div>
+
+                    <form class="mt-4" id="pasta_form">
+
+                        <fieldset class="mb-3">
+                            <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                            <div class="flex flex-wrap gap-1">
+                                {% for pasta in pastas %}
+                                <label for="sub_{{ pasta.name }}" class="cursor-pointer">
+
+                                    <input type="radio" name="pasta" id="sub_{{ pasta.name }}" class="peer sr-only pasta"
+                                        value="{{ pasta.id }}" />
+
+                                    <span
+                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                        {{ pasta.name }}
+                                    </span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                        <div class="mt-8 flex gap-4">
+                            <div>
+                                <label for="quantity" class="sr-only">Qty</label>
+
+                                <input type="number" min="1" value="1" id="pasta_quantity"
+                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                            </div>
+
+                            <button type="submit" id="pasta_submit" style="display: none;"
+                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- SALAD SECTION ********************************************************************** -->
+
+        <section>
+            <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+                <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+                    <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                        <img alt="Les Paul"
+                            src="https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg"
+                            class="aspect-square w-full rounded-xl object-cover" />
+                    </div>
+    
+                    <div class="sticky top-0">
+    
+                        <div class="flex justify-between">
+                            <div class="max-w-[35ch] space-y-2">
+                                <h1 class="text-xl font-bold sm:text-2xl">
+                                    Salad
+                                </h1>
+                            </div>
+    
+                            <p id="sub_price" class="text-lg font-bold"></p>
+                        </div>
+    
+                        <div>
+                            <div class="prose max-w-none">
+                                <p>
+                                    Select the salad flavor that fits your needs and desires
+                                </p>
+                            </div>
+                        </div>
+    
+                        <form class="mt-4" id="salad_form">
+    
+                            <fieldset class="mb-3">
+                                <legend class="mb-1 text-md font-medium">Flavor</legend>
+    
+                                <div class="flex flex-wrap gap-1">
+                                    {% for salad in salads %}
+                                    <label for="sub_{{ salad.name }}" class="cursor-pointer">
+    
+                                        <input type="radio" name="salad" id="sub_{{ salad.name }}" class="peer sr-only salad"
+                                            value="{{ salad.id }}" />
+    
+                                        <span
+                                            class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                            {{ salad.name }}
+                                        </span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </fieldset>
+    
+                            <div class="mt-8 flex gap-4">
+                                <div>
+                                    <label for="quantity" class="sr-only">Qty</label>
+    
+                                    <input type="number" min="1" value="1" id="pasta_quantity"
+                                        class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                                </div>
+    
+                                <button type="submit" id="salad_submit" style="display: none;"
+                                    class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     <!-- JS SECTION ********************************************************************** -->
     <script>
@@ -569,34 +711,13 @@
 
         /* Make AJAX request if pizza data ready */
         document.addEventListener('DOMContentLoaded', function () {
-            // Obtener todos los elementos de tipo radio con la clase "pizza_type"
-            //const pizzaTypeRadios = document.querySelectorAll('.pizza_type');
-
-            // Obtener todos los elementos de tipo radio con la clase "pizza_size"
-            //const pizzaSizeRadios = document.querySelectorAll('.pizza_size');
-
-            // Obtener todos los checkboxes con la clase "topping"
             const extraCheckboxes = document.querySelectorAll('.extra');
-
-            
-            // Función para contar los checkboxes seleccionados
-            function countSubSelectedCheckboxes() {
-                let count = 0;
-                extraCheckboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
-                        count++;
-                    }
-                });
-                return count;
-            }
 
             // Función para realizar la petición AJAX
             function makeSubAjaxRequest() {
-                // Obtener la cantidad de checkboxes seleccionados
                 console.log("SUB petición AJAX.");
-                //const selectedExtrasCount = countSubSelectedCheckboxes();
 
-                let selectedExtras = [];
+                selectedExtras = [];
                 extraCheckboxes.forEach((checkbox) => {
                     if (checkbox.checked) {
                         selectedExtras.push(checkbox.value);
@@ -620,19 +741,13 @@
                         'X-CSRFToken': '{{ csrf_token }}'
                     },
                     success: function (response) {
-                        // Maneja la respuesta exitosa
                         console.log(response.price);
                         updateSubData(response);
                     },
                     error: function (xhr, status, error) {
-                        // Maneja el error
                         console.error(error);
-                        //updateSubData(false, error);
-
                     }
                 });
-                
-
             }
 
             // Función para verificar las condiciones y realizar la petición AJAX
@@ -643,7 +758,6 @@
                 // Obtener el valor del input de pizza_type seleccionado
                 const subTypeInput = document.querySelector('#sub_type');
 
-                console.log('valor de subtype   '+subTypeInput.value);
                 if (subTypeInput.value != "") {
                     subTypeSelected = true;
                     subTypeValue = subTypeInput.value;
@@ -678,16 +792,16 @@
                 if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
                     // Verificar las condiciones y realizar la petición AJAX
                     checkSubConditions();
+                    //console.log(selectedExtras)
                 }
             });
 
 
-            // Pizza add to cart
-
+            // Sub add to cart
+            
             sub_form.onsubmit = (e) => {
                 e.preventDefault();
-                
-                let sub_quantity = subForm.querySelector('#sub_quantity').value;
+                let sub_quantity = sub_form.querySelector('#sub_quantity').value;
                 //console.log(pizza_quantity);
                 const requestData = {
                     product_id: selectedSubProduct,

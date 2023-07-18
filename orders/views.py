@@ -69,6 +69,12 @@ def menu(request):
             
             extraType = ProductType.objects.get(pk=3)
             extras = Product.objects.filter(product_type_id=extraType)
+            
+            pastaType = ProductType.objects.get(pk=4)
+            pastas = Product.objects.filter(product_type_id=pastaType)
+            
+            saladType = ProductType.objects.get(pk=5)
+            salads = Product.objects.filter(product_type_id=saladType)
                 
             print(extraType)
             data = {
@@ -76,7 +82,9 @@ def menu(request):
                 'pizza_types': pizza_types,
                 'toppings': toppings,
                 'sub_types': sub_types,
-                'extras': extras
+                'extras': extras,
+                'pastas': pastas,
+                'salads': salads
             }
             return render(request, 'menu.html', data)
     else:
@@ -168,16 +176,10 @@ def sub_price(request):
     if request.method == 'POST':
         size_id = request.POST.get('sub_size')
         sub_type_id = request.POST.get('sub_type')
-        extras_ids = request.POST.get('extras')
-
-        # try:
-        #     toppings_count_obj = ToppingCount.objects.get(toppings_count=toppings_count)
-        # except ToppingCount.DoesNotExist:
-        #     return JsonResponse({'price': '2'})
+        extras_ids = request.POST.getlist('extras[]')
 
         try:
             sub_detail = SubDetail.objects.get(
-                # product_id=product_type.id,
                 sub_type=sub_type_id,
                 sub_size=size_id,
             )
@@ -185,6 +187,14 @@ def sub_price(request):
             # this is to make the data serializable
             product_id = sub_detail.product_id.id  # Extract the primary key
             price = sub_detail.product_id.price
+            
+            # Now its time to check for extras prices
+            
+            if extras_ids != None:
+                for i in extras_ids:
+                    extra_instance = Product.objects.get(pk=i)
+                    print(extra_instance.price)
+                    price += extra_instance.price
             
             response = {
                 'price': price,
@@ -204,9 +214,8 @@ def sub_price(request):
 def add_sub_cart(request):
     if request.method == 'POST':
         product_instance = Product.objects.get(pk=request.POST.get('product_id'))
-        # product_id = request.POST.get('product_id')
         quantity = request.POST.get('quantity')
-        toppings = request.POST.getlist('toppings[]')
+        extras_ids = request.POST.getlist('extras[]')
 
         try:
             new_cart = Cart(
@@ -217,14 +226,15 @@ def add_sub_cart(request):
             
             new_cart.save()
             
-            if toppings != None:                       
-                for i in toppings:
-                    topping_instance = Topping.objects.get(pk=i)
-                    new_topping_cart = ToppingsCart(
+            if extras_ids != None:
+                for i in extras_ids:
+                    extra_instance = Product.objects.get(pk=i)
+                    new_extras_cart = ExtrasCart(
                         cart_id=new_cart,
-                        topping_id=topping_instance
+                        extra_id=extra_instance
                     )   
-                    new_topping_cart.save()                   
+                    new_extras_cart.save() 
+                    print('aja')
                                 
             return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
         except:
