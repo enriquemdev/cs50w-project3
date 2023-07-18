@@ -242,3 +242,47 @@ def add_sub_cart(request):
 
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+    
+def add_pasta_cart(request):
+    if request.method == 'POST':
+        product_instance = Product.objects.get(pk=request.POST.get('product_id'))
+        quantity = request.POST.get('quantity')
+
+        try:
+            new_cart = Cart(
+                user_id=request.user,
+                product_id=product_instance,
+                quantity=quantity
+            )
+            
+            new_cart.save()
+                                
+            return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
+        except:
+            return JsonResponse ({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+
+def add_salad_cart(request):
+    if request.method == 'POST':
+        product_instance = Product.objects.get(pk=request.POST.get('product_id'))
+        quantity = request.POST.get('quantity')
+
+        try:
+            new_cart = Cart(
+                user_id=request.user,
+                product_id=product_instance,
+                quantity=quantity
+            )
+            
+            new_cart.save()
+                                
+            return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
+        except:
+            return JsonResponse ({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)

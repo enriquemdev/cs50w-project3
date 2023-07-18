@@ -342,7 +342,7 @@
                             </h1>
                         </div>
 
-                        <p id="sub_price" class="text-lg font-bold"></p>
+                        <p id="pasta_price" class="text-lg font-bold"></p>
                     </div>
 
                     <div>
@@ -363,7 +363,7 @@
                                 <label for="sub_{{ pasta.name }}" class="cursor-pointer">
 
                                     <input type="radio" name="pasta" id="sub_{{ pasta.name }}"
-                                        class="peer sr-only pasta" value="{{ pasta.id }}" />
+                                        class="peer sr-only pasta" value="{{ pasta.id }}" price="{{ pasta.price }}" />
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -413,7 +413,7 @@
                             </h1>
                         </div>
 
-                        <p id="sub_price" class="text-lg font-bold"></p>
+                        <p id="salad_price" class="text-lg font-bold"></p>
                     </div>
 
                     <div>
@@ -434,7 +434,7 @@
                                 <label for="sub_{{ salad.name }}" class="cursor-pointer">
 
                                     <input type="radio" name="salad" id="sub_{{ salad.name }}"
-                                        class="peer sr-only salad" value="{{ salad.id }}" />
+                                        class="peer sr-only salad" value="{{ salad.id }}" price="{{ salad.price }}"/>
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -449,7 +449,7 @@
                             <div>
                                 <label for="quantity" class="sr-only">Qty</label>
 
-                                <input type="number" min="1" value="1" id="pasta_quantity"
+                                <input type="number" min="1" value="1" id="salad_quantity"
                                     class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
                             </div>
 
@@ -840,11 +840,126 @@
 
         /*****************************************************************************************************************/
 
-        let pastaPriceText = document.getElementById('sub_price');
-        let pastaSubmitButton = document.getElementById('sub_submit');
+        let pastaPriceText = document.getElementById('pasta_price');
+        let pastaSubmitButton = document.getElementById('pasta_submit');
         let selectedPastaPrice = 0;
         let selectedPastaProduct = 0;
 
+        const pasta_form = document.getElementById('pasta_form');
+
+        pasta_form.addEventListener('click', function (event) {
+            if (event.target.classList.contains('pasta')) {
+
+                selectedPastaPrice = event.target.getAttribute('price');
+                selectedPastaProduct = event.target.value;
+
+                pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
+                pastaSubmitButton.style.display = "block";
+
+            }
+        });
+
+        // Pasta add to cart
+        pasta_form.onsubmit = (e) => {
+            e.preventDefault();
+            let pasta_quantity = pasta_form.querySelector('#pasta_quantity').value;
+            const requestData = {
+                product_id: selectedPastaProduct,
+                quantity: pasta_quantity,
+            };
+
+            console.log(requestData);
+
+            $.ajax({
+                url: '/add_pasta_cart',
+                type: 'POST',
+                data: requestData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                }
+            });
+        }
+
+        
+         /*****************************************************************************************************************/
+
+         let saladPriceText = document.getElementById('salad_price');
+         let saladSubmitButton = document.getElementById('salad_submit');
+         let selectedSaladPrice = 0;
+         let selectedSaladProduct = 0;
+ 
+         const salad_form = document.getElementById('salad_form');
+ 
+         salad_form.addEventListener('click', function (event) {
+             if (event.target.classList.contains('salad')) {
+ 
+                 selectedSaladPrice = event.target.getAttribute('price');
+                 selectedSaladProduct = event.target.value;
+ 
+                 saladPriceText.innerHTML = "$ " + selectedSaladPrice;
+                 saladSubmitButton.style.display = "block";
+             }
+         });
+ 
+         // Salad add to cart
+         salad_form.onsubmit = (e) => {
+             e.preventDefault();
+             let salad_quantity = salad_form.querySelector('#salad_quantity').value;
+             const requestData = {
+                 product_id: selectedSaladProduct,
+                 quantity: salad_quantity,
+             };
+ 
+             console.log(requestData);
+ 
+             $.ajax({
+                 url: '/add_salad_cart',
+                 type: 'POST',
+                 data: requestData,
+                 dataType: 'json',
+                 headers: {
+                     'X-CSRFToken': '{{ csrf_token }}'
+                 },
+                 success: function (response) {
+                     Swal.fire(
+                         response.title,
+                         response.message,
+                         response.type
+                     )
+                 },
+                 error: function (response) {
+                     Swal.fire(
+                         response.title,
+                         response.message,
+                         response.type
+                     )
+                 }
+             });
+         }
+
+
+        /*****************************************************************************************************************/
+
+        /*let pastaPriceText = document.getElementById('sub_price');
+        let pastaSubmitButton = document.getElementById('sub_submit');
+        let selectedPastaPrice = 0;
+        let selectedPastaProduct = 0;*/
+/*
         let pastaTypeValue = '';
 
 
@@ -862,10 +977,9 @@
             }
         }
 
-        /* Make AJAX request if pizza data ready */
         document.addEventListener('DOMContentLoaded', function () {
             // Función para realizar la petición AJAX
-            function makeSubAjaxRequest() {
+            function makePastaAjaxRequest() {
                 console.log("pasta petición AJAX.");
 
                 const requestData = {
@@ -874,7 +988,6 @@
 
                 console.log(requestData);
 
-                //AQUIIII
                 $.ajax({
                     url: '/pasta_price',
                     type: 'POST',
@@ -894,68 +1007,62 @@
             }
 
             // Función para verificar las condiciones y realizar la petición AJAX
-            function checkSubConditions() {
-                let subTypeSelected = false;
-                let subSizeChecked = false;
+            function checkPastaConditions() {
+                let pastaTypeChecked = false;
 
-                // Obtener el valor del input de pizza_type seleccionado
-                const subTypeInput = document.querySelector('#sub_type');
+                const pastaTypeInput = document.querySelectorAll('.pasta');
 
-                if (subTypeInput.value != "") {
-                    subTypeSelected = true;
-                    subTypeValue = subTypeInput.value;
-                }
-
-
-                // Obtener el valor del input de pizza_size seleccionado
-                const subSizeInputs = document.querySelectorAll('.sub_size');
-
-                subSizeInputs.forEach((input) => {
+                pastaTypeInput.forEach((input) => {
                     if (input.checked) {
-                        subSizeChecked = true;
-                        subSizeValue = input.value;
+                        pastaTypeChecked = true;
+                        pastaTypeValue = input.value;
                     }
                 });
 
-                console.log(subTypeSelected, subSizeChecked)
                 // Verificar las condiciones
-                if (subTypeSelected && subSizeChecked) {
-                    makeSubAjaxRequest();
+                if (pastaTypeChecked) {
+                    makePastaAjaxRequest();
                 } else {
-                    console.log("No se cumplen las condiciones para hacer la petición SUB AJAX.");
+                    console.log("No se cumplen las condiciones para hacer la petición pasta AJAX.");
                 }
             }
 
             // Obtener el formulario con el ID "pizza_form"
-            const sub_form = document.getElementById('sub_form');
+            const pasta_form = document.getElementById('pasta_form');
 
             // Agregar un evento 'click' al formulario
-            sub_form.addEventListener('click', function (event) {
+            pasta_form.addEventListener('click', function (event) {
                 // Verificar si el objetivo del evento es un input dentro del formulario
-                if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
-                    // Verificar las condiciones y realizar la petición AJAX
-                    checkSubConditions();
-                    //console.log(selectedExtras)
+                if (event.target.tagName === 'INPUT') {
+                    //checkPastaConditions();
+                    if (response.price != 'error') {
+                        selectedPastaPrice = response.price;
+                        selectedPastaProduct = response.product_id;
+
+                        pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
+                        pastaSubmitButton.style.display = "block";
+                    } else {
+                        selectedpastaPrice = 0;
+                        pastaPriceText.innerHTML = "Product not found";
+                        pastaSubmitButton.style.display = "none";
+                    }
                 }
             });
 
-
-            // Sub add to cart
-
-            sub_form.onsubmit = (e) => {
+            // Pasta add to cart
+            pasta_form.onsubmit = (e) => {
                 e.preventDefault();
-                let sub_quantity = sub_form.querySelector('#sub_quantity').value;
+                let pasta_quantity = sub_form.querySelector('#pasta_quantity').value;
                 //console.log(pizza_quantity);
                 const requestData = {
-                    product_id: selectedSubProduct,
-                    quantity: sub_quantity,
-                    extras: selectedExtras,
+                    product_id: selectedPastaProduct,
+                    quantity: pasta_quantity,
                 };
 
                 console.log(requestData);
 
                 $.ajax({
-                    url: '/add_sub_cart',
+                    url: '/add_pasta_cart',
                     type: 'POST',
                     data: requestData,
                     dataType: 'json',
@@ -978,7 +1085,7 @@
                     }
                 });
             }
-        })
+        })*/
     </script>
 </body>
 

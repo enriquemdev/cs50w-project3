@@ -16,5 +16,8 @@ urlpatterns = [
     path("add_pizza_cart", views.add_pizza_cart, name="add_pizza_cart"),
     path("sub_price", views.sub_price, name="sub_price"),
     path("add_sub_cart", views.add_sub_cart, name="add_sub_cart"),
+    
+    path("add_pasta_cart", views.add_pasta_cart, name="add_pasta_cart"),
+    path("add_salad_cart", views.add_salad_cart, name="add_salad_cart"),
 
 ]
