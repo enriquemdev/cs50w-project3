@@ -464,6 +464,96 @@
         </div>
     </section>
 
+    <!-- SALAD SECTION ********************************************************************** -->
+
+    <section>
+        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                    <img alt="Les Paul"
+                        src="https://www.organizeyourselfskinny.com/wp-content/uploads/2022/02/chicken-meatball-parm-feature.jpg"
+                        class="aspect-square w-full rounded-xl object-cover" />
+                </div>
+
+                <div class="sticky top-0">
+
+                    <div class="flex justify-between">
+                        <div class="max-w-[35ch] space-y-2">
+                            <h1 class="text-xl font-bold sm:text-2xl">
+                                Dinner Platters
+                            </h1>
+                        </div>
+
+                        <p id="dp_price" class="text-lg font-bold"></p>
+                    </div>
+
+                    <div>
+                        <div class="prose max-w-none">
+                            <p>
+                                Select the Dinner Platter flavor an size that fits your needs and desires
+                            </p>
+                        </div>
+                    </div>
+
+                    <form class="mt-4" id="dp_form">
+
+                        <fieldset class="mb-3">
+                            <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                            <div class="flex flex-wrap gap-1">
+                                {% for dp in dps %}
+                                <label for="sub_{{ dp.name }}" class="cursor-pointer">
+
+                                    <input type="radio" name="dp" id="sub_{{ dp.name }}"
+                                        class="peer sr-only dp_type" value="{{ dp.id }}"/>
+
+                                    <span
+                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                        {{ dp.name }}
+                                    </span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="mb-3">
+                            <legend class="mb-1 text-md font-medium">Size</legend>
+
+                            <div class="flex flex-wrap gap-1">
+                                {% for size in sizes %}
+                                <label for="sub_{{ size.name }}" class="cursor-pointer">
+
+                                    <input type="radio" name="dp_size" id="dp_{{ size.name }}"
+                                        class="peer sr-only dp_size" value="{{ size.id }}" />
+
+                                    <span
+                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                        {{ size.name }}
+                                    </span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                        <div class="mt-8 flex gap-4">
+                            <div>
+                                <label for="quantity" class="sr-only">Qty</label>
+
+                                <input type="number" min="1" value="1" id="dp_quantity"
+                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                            </div>
+
+                            <button type="submit" id="dp_submit" style="display: none;"
+                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- JS SECTION ********************************************************************** -->
     <script>
         /* Allow max 4 topping checkboxes checked */
@@ -955,19 +1045,20 @@
 
         /*****************************************************************************************************************/
 
-        /*let pastaPriceText = document.getElementById('sub_price');
-        let pastaSubmitButton = document.getElementById('sub_submit');
-        let selectedPastaPrice = 0;
-        let selectedPastaProduct = 0;*/
-/*
-        let pastaTypeValue = '';
+        let dpPriceText = document.getElementById('sub_price');
+        let dpSubmitButton = document.getElementById('sub_submit');
+        let selectedDpPrice = 0;
+        let selectedDpProduct = 0;
+        let selectedDpDetail = 0;
 
+        let dpTypeValue = '';
+        let dpSizeValue = '';
 
-        function updatePastaData(response) {
+        function updateDpData(response) {
             if (response.price != 'error') {
-                selectedPastaPrice = response.price;
-                selectedPastaProduct = response.product_id;
-
+                selectedDpPrice = response.price;
+                selectedDpProduct = response.product_id;
+                selectedDpDetail = response.detail_id;
                 pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
                 pastaSubmitButton.style.display = "block";
             } else {
@@ -979,17 +1070,18 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             // Función para realizar la petición AJAX
-            function makePastaAjaxRequest() {
-                console.log("pasta petición AJAX.");
+            function makeDpAjaxRequest() {
+                console.log("dp petición AJAX.");
 
                 const requestData = {
-                    pasta_type: pastaTypeValue,
+                    dp_type: dpTypeValue,
+                    dp_size: dpSizeValue,
                 };
 
                 console.log(requestData);
-
+                //AQUIIII
                 $.ajax({
-                    url: '/pasta_price',
+                    url: '/dp_price',
                     type: 'POST',
                     data: requestData,
                     dataType: 'json',
@@ -1085,7 +1177,7 @@
                     }
                 });
             }
-        })*/
+        })
     </script>
 </body>
 

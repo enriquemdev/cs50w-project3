@@ -75,6 +75,8 @@ def menu(request):
             
             saladType = ProductType.objects.get(pk=5)
             salads = Product.objects.filter(product_type_id=saladType)
+            
+            dps = DinnerPlatterType.objects.all()
                 
             print(extraType)
             data = {
@@ -84,7 +86,8 @@ def menu(request):
                 'sub_types': sub_types,
                 'extras': extras,
                 'pastas': pastas,
-                'salads': salads
+                'salads': salads,
+                'dps': dps,
             }
             return render(request, 'menu.html', data)
     else:
