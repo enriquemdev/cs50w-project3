@@ -289,3 +289,66 @@ def add_salad_cart(request):
 
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+
+def dp_price(request):
+    if request.method == 'POST':
+        size_id = request.POST.get('dp_size')
+        dp_type_id = request.POST.get('dp_type')
+
+        try:
+            dp_detail = DinnerPlatterDetail.objects.get(
+                dp_type=dp_type_id,
+                dp_size=size_id,
+            )
+            
+            # this is to make the data serializable
+            product_id = dp_detail.product_id.id  # Extract the primary key
+            price = dp_detail.product_id.price
+            
+            response = {
+                'price': price,
+                'product_id': product_id,
+                'detail_id': dp_detail.id,
+            }
+
+            return JsonResponse(response)
+            
+        except DinnerPlatterDetail.DoesNotExist:
+            return JsonResponse({'price': 'error'})
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+    
+def add_dp_cart(request):
+    if request.method == 'POST':
+        product_instance = Product.objects.get(pk=request.POST.get('product_id'))
+        quantity = request.POST.get('quantity')
+        extras_ids = request.POST.getlist('extras[]')
+
+        try:
+            new_cart = Cart(
+                user_id=request.user,
+                product_id=product_instance,
+                quantity=quantity
+            )
+            
+            new_cart.save()
+            
+            if extras_ids != None:
+                for i in extras_ids:
+                    extra_instance = Product.objects.get(pk=i)
+                    new_extras_cart = ExtrasCart(
+                        cart_id=new_cart,
+                        extra_id=extra_instance
+                    )   
+                    new_extras_cart.save() 
+                    print('aja')
+                                
+            return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
+        except:
+            return JsonResponse({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)

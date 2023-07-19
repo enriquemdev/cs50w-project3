@@ -81,7 +81,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, blank=False)
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     def __str__(self):
-        return self.name
+        return f"{self.id} - {self.name}"
     
 class PizzaDetail(models.Model):
     # name = models.CharField(max_length=200, blank=False)
@@ -113,7 +113,7 @@ class DinnerPlatterDetail(models.Model):
     dp_size = models.ForeignKey(Size, on_delete=models.CASCADE)
     # price = models.DecimalField(max_digits=8, decimal_places=2)
     def __str__(self):
-        return f"{self.product_id.name} - {self.dp_type.name} ({self.dp_size.name})"
+        return f"{self.product_id.id} - {self.product_id.name} - {self.dp_type.name} ({self.dp_size.name})"
  
 # Cart tables
 

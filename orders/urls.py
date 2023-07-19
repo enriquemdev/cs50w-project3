@@ -19,5 +19,8 @@ urlpatterns = [
     
     path("add_pasta_cart", views.add_pasta_cart, name="add_pasta_cart"),
     path("add_salad_cart", views.add_salad_cart, name="add_salad_cart"),
+    
+    path("dp_price", views.dp_price, name="dp_price"),
+    path("add_dp_cart", views.add_dp_cart, name="add_dp_cart"),
 
 ]

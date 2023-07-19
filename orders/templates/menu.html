@@ -38,35 +38,34 @@
             <div class="sm:flex sm:items-center sm:justify-between">
                 <div class="text-center sm:text-left">
                     <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                        Welcome Back, Barry!
+                        Welcome Back, {{ user.username }}!
                     </h1>
 
-                    <p class="mt-1.5 text-sm text-gray-500">
-                        Let's write a new blog post! 🎉
+                    <p class="mt-1.5 text-sm  text-blue-400">
+                        <a href="/">See the menu! 🎉</a>
                     </p>
-                    <p class="mt-1.5 text-sm">
-                        <a href="/log_out">logout</a>
+                    <p class="mt-1.5 text-sm text-blue-400">
+                        <a href="/log_out">Log out</a>
                     </p>
                 </div>
 
                 <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                    <button
-                        class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
-                        type="button">
-                        <span class="text-sm font-medium"> View Website </span>
+                    <a href="/my-orders">
+                        <button
+                            class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
+                            type="button">
+                            <span class="text-sm font-medium"> My orders </span>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                    </button>
+                        </button>
+                    </a>
 
-                    <button
-                        class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                        type="button">
-                        Create Post
-                    </button>
+                    <a href="/cart">
+                        <button
+                            class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                            type="button">
+                            Shopping cart
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -434,7 +433,7 @@
                                 <label for="sub_{{ salad.name }}" class="cursor-pointer">
 
                                     <input type="radio" name="salad" id="sub_{{ salad.name }}"
-                                        class="peer sr-only salad" value="{{ salad.id }}" price="{{ salad.price }}"/>
+                                        class="peer sr-only salad" value="{{ salad.id }}" price="{{ salad.price }}" />
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -502,10 +501,10 @@
 
                             <div class="flex flex-wrap gap-1">
                                 {% for dp in dps %}
-                                <label for="sub_{{ dp.name }}" class="cursor-pointer">
+                                <label for="dp_{{ dp.name }}" class="cursor-pointer">
 
-                                    <input type="radio" name="dp" id="sub_{{ dp.name }}"
-                                        class="peer sr-only dp_type" value="{{ dp.id }}"/>
+                                    <input type="radio" name="dp" id="dp_{{ dp.name }}" class="peer sr-only dp_type"
+                                        value="{{ dp.id }}" />
 
                                     <span
                                         class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
@@ -521,7 +520,7 @@
 
                             <div class="flex flex-wrap gap-1">
                                 {% for size in sizes %}
-                                <label for="sub_{{ size.name }}" class="cursor-pointer">
+                                <label for="dp_{{ size.name }}" class="cursor-pointer">
 
                                     <input type="radio" name="dp_size" id="dp_{{ size.name }}"
                                         class="peer sr-only dp_size" value="{{ size.id }}" />
@@ -985,68 +984,68 @@
             });
         }
 
-        
-         /*****************************************************************************************************************/
 
-         let saladPriceText = document.getElementById('salad_price');
-         let saladSubmitButton = document.getElementById('salad_submit');
-         let selectedSaladPrice = 0;
-         let selectedSaladProduct = 0;
- 
-         const salad_form = document.getElementById('salad_form');
- 
-         salad_form.addEventListener('click', function (event) {
-             if (event.target.classList.contains('salad')) {
- 
-                 selectedSaladPrice = event.target.getAttribute('price');
-                 selectedSaladProduct = event.target.value;
- 
-                 saladPriceText.innerHTML = "$ " + selectedSaladPrice;
-                 saladSubmitButton.style.display = "block";
-             }
-         });
- 
-         // Salad add to cart
-         salad_form.onsubmit = (e) => {
-             e.preventDefault();
-             let salad_quantity = salad_form.querySelector('#salad_quantity').value;
-             const requestData = {
-                 product_id: selectedSaladProduct,
-                 quantity: salad_quantity,
-             };
- 
-             console.log(requestData);
- 
-             $.ajax({
-                 url: '/add_salad_cart',
-                 type: 'POST',
-                 data: requestData,
-                 dataType: 'json',
-                 headers: {
-                     'X-CSRFToken': '{{ csrf_token }}'
-                 },
-                 success: function (response) {
-                     Swal.fire(
-                         response.title,
-                         response.message,
-                         response.type
-                     )
-                 },
-                 error: function (response) {
-                     Swal.fire(
-                         response.title,
-                         response.message,
-                         response.type
-                     )
-                 }
-             });
-         }
+        /*****************************************************************************************************************/
+
+        let saladPriceText = document.getElementById('salad_price');
+        let saladSubmitButton = document.getElementById('salad_submit');
+        let selectedSaladPrice = 0;
+        let selectedSaladProduct = 0;
+
+        const salad_form = document.getElementById('salad_form');
+
+        salad_form.addEventListener('click', function (event) {
+            if (event.target.classList.contains('salad')) {
+
+                selectedSaladPrice = event.target.getAttribute('price');
+                selectedSaladProduct = event.target.value;
+
+                saladPriceText.innerHTML = "$ " + selectedSaladPrice;
+                saladSubmitButton.style.display = "block";
+            }
+        });
+
+        // Salad add to cart
+        salad_form.onsubmit = (e) => {
+            e.preventDefault();
+            let salad_quantity = salad_form.querySelector('#salad_quantity').value;
+            const requestData = {
+                product_id: selectedSaladProduct,
+                quantity: salad_quantity,
+            };
+
+            console.log(requestData);
+
+            $.ajax({
+                url: '/add_salad_cart',
+                type: 'POST',
+                data: requestData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                },
+                error: function (response) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                }
+            });
+        }
 
 
         /*****************************************************************************************************************/
 
-        let dpPriceText = document.getElementById('sub_price');
-        let dpSubmitButton = document.getElementById('sub_submit');
+        let dpPriceText = document.getElementById('dp_price');
+        let dpSubmitButton = document.getElementById('dp_submit');
         let selectedDpPrice = 0;
         let selectedDpProduct = 0;
         let selectedDpDetail = 0;
@@ -1059,12 +1058,12 @@
                 selectedDpPrice = response.price;
                 selectedDpProduct = response.product_id;
                 selectedDpDetail = response.detail_id;
-                pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
-                pastaSubmitButton.style.display = "block";
+                dpPriceText.innerHTML = "$ " + selectedDpPrice;
+                dpSubmitButton.style.display = "block";
             } else {
-                selectedpastaPrice = 0;
-                pastaPriceText.innerHTML = "Product not found";
-                pastaSubmitButton.style.display = "none";
+                selectedDpPrice = 0;
+                dpPriceText.innerHTML = "Product not found";
+                dpSubmitButton.style.display = "none";
             }
         }
 
@@ -1079,7 +1078,7 @@
                 };
 
                 console.log(requestData);
-                //AQUIIII
+
                 $.ajax({
                     url: '/dp_price',
                     type: 'POST',
@@ -1090,7 +1089,7 @@
                     },
                     success: function (response) {
                         console.log(response.price);
-                        updateSubData(response);
+                        updateDpData(response);
                     },
                     error: function (xhr, status, error) {
                         console.error(error);
@@ -1099,62 +1098,62 @@
             }
 
             // Función para verificar las condiciones y realizar la petición AJAX
-            function checkPastaConditions() {
-                let pastaTypeChecked = false;
+            function checkDpConditions() {
+                let dpTypeChecked = false;
+                let dpSizeChecked = false;
 
-                const pastaTypeInput = document.querySelectorAll('.pasta');
 
-                pastaTypeInput.forEach((input) => {
+                const dpTypeInput = document.querySelectorAll('.dp_type');
+
+                dpTypeInput.forEach((input) => {
                     if (input.checked) {
-                        pastaTypeChecked = true;
-                        pastaTypeValue = input.value;
+                        dpTypeChecked = true;
+                        dpTypeValue = input.value;
+                    }
+                });
+
+                const dpSizeInput = document.querySelectorAll('.dp_size');
+
+                dpSizeInput.forEach((input) => {
+                    if (input.checked) {
+                        dpSizeChecked = true;
+                        dpSizeValue = input.value;
                     }
                 });
 
                 // Verificar las condiciones
-                if (pastaTypeChecked) {
-                    makePastaAjaxRequest();
+                if (dpSizeChecked && dpTypeChecked) {
+                    makeDpAjaxRequest();
                 } else {
-                    console.log("No se cumplen las condiciones para hacer la petición pasta AJAX.");
+                    console.log("No se cumplen las condiciones para hacer la petición dp AJAX.");
                 }
             }
 
             // Obtener el formulario con el ID "pizza_form"
-            const pasta_form = document.getElementById('pasta_form');
+            const dp_form = document.getElementById('dp_form');
 
-            // Agregar un evento 'click' al formulario
-            pasta_form.addEventListener('click', function (event) {
+            dp_form.addEventListener('click', function (event) {
                 // Verificar si el objetivo del evento es un input dentro del formulario
                 if (event.target.tagName === 'INPUT') {
-                    //checkPastaConditions();
-                    if (response.price != 'error') {
-                        selectedPastaPrice = response.price;
-                        selectedPastaProduct = response.product_id;
-
-                        pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
-                        pastaSubmitButton.style.display = "block";
-                    } else {
-                        selectedpastaPrice = 0;
-                        pastaPriceText.innerHTML = "Product not found";
-                        pastaSubmitButton.style.display = "none";
-                    }
+                    // Verificar las condiciones y realizar la petición AJAX
+                    checkDpConditions();
                 }
             });
 
-            // Pasta add to cart
-            pasta_form.onsubmit = (e) => {
+            // dp add to cart
+            dp_form.onsubmit = (e) => {
                 e.preventDefault();
-                let pasta_quantity = sub_form.querySelector('#pasta_quantity').value;
-                //console.log(pizza_quantity);
+                let dp_quantity = dp_form.querySelector('#dp_quantity').value;
+
                 const requestData = {
-                    product_id: selectedPastaProduct,
-                    quantity: pasta_quantity,
+                    product_id: selectedDpProduct,
+                    quantity: dp_quantity,
                 };
 
                 console.log(requestData);
 
                 $.ajax({
-                    url: '/add_pasta_cart',
+                    url: '/add_dp_cart',
                     type: 'POST',
                     data: requestData,
                     dataType: 'json',
