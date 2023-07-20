@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import never_cache
+from django.db.models import Sum
 
 # Models
 from orders.models import *
@@ -90,6 +91,58 @@ def menu(request):
                 'dps': dps,
             }
             return render(request, 'menu.html', data)
+    else:
+        return redirect('/login')
+    
+def cart(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            user = request.user
+            
+            # cart_items = Cart.objects.filter(user_id=user, is_sold=False) \
+            #                 .values('id', 'product_id') \
+            #                 .annotate(total_quantity=Sum('quantity'), product_name=models.F('product_id__name'), product_price=models.F('product_id__price'))
+                
+            # print(extraType)
+            # data = {
+            #     'sizes': sizes,
+            #     'pizza_types': pizza_types,
+            #     'toppings': toppings,
+            #     'sub_types': sub_types,
+            #     'extras': extras,
+            #     'pastas': pastas,
+            #     'salads': salads,
+            #     'dps': dps,
+            # }
+            
+            # cart_items_list = list(cart_items)
+            
+            # Obtener el usuario autenticado
+            user = request.user
+
+            # Obtener todos los registros del modelo Cart del usuario autenticado
+            cart_items = Cart.objects.filter(user_id=user, is_sold=False)
+
+            # Obtener los datos del modelo Product relacionados con los registros del modelo Cart
+            cart_items = cart_items.select_related('product_id')
+
+            # Anotar la suma de la columna quantity agrupada por product_id
+            cart_items = cart_items.annotate(total_quantity=Sum('quantity'))
+
+            # Obtener las filas relacionadas del modelo ToppingsCart y del modelo ExtrasCart
+            cart_items = cart_items.prefetch_related('toppingscart_set__topping_id', 'extrascart_set__extra_id')
+
+            cart_items_list = list(cart_items)
+
+            listt = []
+            # Imprimir todos los elementos que contiene cart_items[0] (opcional)
+            if cart_items_list:
+                for i in cart_items_list:
+                    cart_item_data = vars(i)
+                    listt.append(cart_item_data)
+                    print(cart_item_data)
+                    print()
+            return render(request, 'cart.html', {'data': listt})
     else:
         return redirect('/login')
     

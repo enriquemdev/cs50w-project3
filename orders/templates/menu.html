@@ -1,173 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinoccio´s Pizza and Subs</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,700&display=swap');
-      </style> -->
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.2.1/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
+{% block content %}
+<!-- ********************************************************************** -->
 
-    <script src="https://cdn.jsdelivr.net/npm/tailwind-typography@0.1.0/src/index.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+<!-- PIZZA SECTION ********************************************************************** -->
 
-<body>
-
-    <!--
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
--->
-
-    <header class="bg-gray-50">
-        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-            <div class="sm:flex sm:items-center sm:justify-between">
-                <div class="text-center sm:text-left">
-                    <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                        Welcome Back, {{ user.username }}!
-                    </h1>
-
-                    <p class="mt-1.5 text-sm  text-blue-400">
-                        <a href="/">See the menu! 🎉</a>
-                    </p>
-                    <p class="mt-1.5 text-sm text-blue-400">
-                        <a href="/log_out">Log out</a>
-                    </p>
-                </div>
-
-                <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                    <a href="/my-orders">
-                        <button
-                            class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
-                            type="button">
-                            <span class="text-sm font-medium"> My orders </span>
-
-                        </button>
-                    </a>
-
-                    <a href="/cart">
-                        <button
-                            class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                            type="button">
-                            Shopping cart
-                        </button>
-                    </a>
-                </div>
+<section>
+    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                <img alt="Les Paul"
+                    src="https://www.simplyrecipes.com/thmb/I4razizFmeF8ua2jwuD0Pq4XpP8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-4-82c60893fcad4ade906a8a9f59b8da9d.jpg"
+                    class="aspect-square w-full rounded-xl object-cover" />
             </div>
-        </div>
-    </header>
 
-    <!-- ********************************************************************** -->
+            <div class="sticky top-0">
 
-    <!-- PIZZA SECTION ********************************************************************** -->
+                <div class="flex justify-between">
+                    <div class="max-w-[35ch] space-y-2">
+                        <h1 class="text-xl font-bold sm:text-2xl">
+                            Pizza
+                        </h1>
+                    </div>
 
-    <section>
-        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <img alt="Les Paul"
-                        src="https://www.simplyrecipes.com/thmb/I4razizFmeF8ua2jwuD0Pq4XpP8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-4-82c60893fcad4ade906a8a9f59b8da9d.jpg"
-                        class="aspect-square w-full rounded-xl object-cover" />
+                    <p id="pizza_price" class="text-lg font-bold"></p>
                 </div>
 
-                <div class="sticky top-0">
-
-                    <div class="flex justify-between">
-                        <div class="max-w-[35ch] space-y-2">
-                            <h1 class="text-xl font-bold sm:text-2xl">
-                                Pizza
-                            </h1>
-                        </div>
-
-                        <p id="pizza_price" class="text-lg font-bold"></p>
+                <div class="">
+                    <div class="prose max-w-none">
+                        <p>
+                            Select the options on each category to make your own ideal pizza.
+                        </p>
                     </div>
+                </div>
 
-                    <div class="">
-                        <div class="prose max-w-none">
-                            <p>
-                                Select the options on each category to make your own ideal pizza.
-                            </p>
+                <form class="mt-4" id="pizza_form">
+
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Pizza Type</legend>
+
+                        <div class="flex flex-wrap gap-1">
+                            {% for type in pizza_types %}
+                            <label for="{{ type.name }}" class="cursor-pointer">
+
+                                <input type="radio" name="pizza_type" id="{{ type.name }}"
+                                    class="peer sr-only pizza_type" value="{{ type.id }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ type.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
                         </div>
-                    </div>
+                    </fieldset>
 
-                    <form class="mt-4" id="pizza_form">
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Size</legend>
 
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Pizza Type</legend>
+                        <div class="flex flex-wrap gap-1">
+                            {% for size in sizes %}
+                            <label for="{{ size.name }}" class="cursor-pointer">
 
-                            <div class="flex flex-wrap gap-1">
-                                {% for type in pizza_types %}
-                                <label for="{{ type.name }}" class="cursor-pointer">
+                                <input type="radio" name="pizza_size" id="{{ size.name }}"
+                                    class="peer sr-only pizza_size" value="{{ size.id }}" />
 
-                                    <input type="radio" name="pizza_type" id="{{ type.name }}"
-                                        class="peer sr-only pizza_type" value="{{ type.id }}" />
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ size.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="mt-4">
+                        <legend class="text-md font-medium">Toppings</legend>
+                        <p class="mb-3 text-xs font-small">Select up to 4 toppings</p>
+                        <div class="flex flex-wrap gap-5">
+                            {% for topping in toppings %}
+                            <div class="flex flex-wrap gap-1 w-44">
+                                <label for="{{ topping.name }}" class="relative h-6 w-11 cursor-pointer">
+
+                                    <input type="checkbox" id="{{ topping.name }}" class="peer sr-only topping"
+                                        value="{{ topping.id }}" />
 
                                     <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ type.name }}
-                                    </span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Size</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                {% for size in sizes %}
-                                <label for="{{ size.name }}" class="cursor-pointer">
-
-                                    <input type="radio" name="pizza_size" id="{{ size.name }}"
-                                        class="peer sr-only pizza_size" value="{{ size.id }}" />
+                                        class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
 
                                     <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ size.name }}
-                                    </span>
+                                        class="absolute inset-y-0 start-0 m-1 h-4 w-4 rounded-full bg-white transition-all peer-checked:start-4"></span>
+
                                 </label>
-                                {% endfor %}
+                                <span class="text-sm font-semibold">{{ topping.name }}</span>
                             </div>
-                        </fieldset>
-
-                        <fieldset class="mt-4">
-                            <legend class="text-md font-medium">Toppings</legend>
-                            <p class="mb-3 text-xs font-small">Select up to 4 toppings</p>
-                            <div class="flex flex-wrap gap-5">
-                                {% for topping in toppings %}
-                                <div class="flex flex-wrap gap-1 w-44">
-                                    <label for="{{ topping.name }}" class="relative h-6 w-11 cursor-pointer">
-
-                                        <input type="checkbox" id="{{ topping.name }}" class="peer sr-only topping"
-                                            value="{{ topping.id }}" />
-
-                                        <span
-                                            class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
-
-                                        <span
-                                            class="absolute inset-y-0 start-0 m-1 h-4 w-4 rounded-full bg-white transition-all peer-checked:start-4"></span>
-
-                                    </label>
-                                    <span class="text-sm font-semibold">{{ topping.name }}</span>
-                                </div>
-                                {% endfor %}
+                            {% endfor %}
 
 
-                                <!-- <div class="flex flex-wrap gap-1 w-48">
+                            <!-- <div class="flex flex-wrap gap-1 w-48">
                                     <label for="AcceptConditions" class="relative h-8 w-14 cursor-pointer">
 
                                         <input type="checkbox" id="AcceptConditions" class="peer sr-only" />
@@ -182,391 +113,454 @@
                                     <span>Barbecue Chicken</span>
                                 </div> -->
 
-                            </div>
-
-                        </fieldset>
-
-                        <div class="mt-8 flex gap-4">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" min="1" value="1" id="pizza_quantity"
-                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                            </div>
-
-                            <button id="pizza_submit" type="submit" style="display: none;"
-                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                Add to Cart
-                            </button>
                         </div>
-                    </form>
-                </div>
+
+                    </fieldset>
+
+                    <div class="mt-8 flex gap-4">
+                        <div>
+                            <label for="quantity" class="sr-only">Qty</label>
+
+                            <input type="number" min="1" value="1" id="pizza_quantity"
+                                class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                        </div>
+
+                        <button id="pizza_submit" type="submit" style="display: none;"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SUBS SECTION ********************************************************************** -->
+<!-- SUBS SECTION ********************************************************************** -->
 
-    <section>
-        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <img alt="Les Paul"
-                        src="https://goodcheapeats.com/wp-content/uploads/2021/06/two-italian-subs-square-no-bg-green.jpg"
-                        class="aspect-square w-full rounded-xl object-cover" />
+<section>
+    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                <img alt="Les Paul"
+                    src="https://goodcheapeats.com/wp-content/uploads/2021/06/two-italian-subs-square-no-bg-green.jpg"
+                    class="aspect-square w-full rounded-xl object-cover" />
+            </div>
+
+            <div class="sticky top-0">
+
+                <div class="flex justify-between">
+                    <div class="max-w-[35ch] space-y-2">
+                        <h1 class="text-xl font-bold sm:text-2xl">
+                            Subs
+                        </h1>
+                    </div>
+
+                    <p id="sub_price" class="text-lg font-bold"></p>
                 </div>
 
-                <div class="sticky top-0">
-
-                    <div class="flex justify-between">
-                        <div class="max-w-[35ch] space-y-2">
-                            <h1 class="text-xl font-bold sm:text-2xl">
-                                Subs
-                            </h1>
-                        </div>
-
-                        <p id="sub_price" class="text-lg font-bold"></p>
+                <div>
+                    <div class="prose max-w-none">
+                        <p>
+                            Select the options on each category to make your own ideal sub.
+                        </p>
                     </div>
+                </div>
 
-                    <div>
-                        <div class="prose max-w-none">
-                            <p>
-                                Select the options on each category to make your own ideal sub.
-                            </p>
-                        </div>
-                    </div>
+                <form class="mt-4" id="sub_form">
 
-                    <form class="mt-4" id="sub_form">
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Sub Type</legend>
 
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Sub Type</legend>
-
-                            <div>
-                                <!-- <label for="sub_type" class="block text-sm font-medium text-gray-900">
+                        <div>
+                            <!-- <label for="sub_type" class="block text-sm font-medium text-gray-900">
                                   Headliner
                                 </label> -->
-                                <select name="sub_type" id="sub_type"
-                                    class="mt-1.5 p-2 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-                                    required>
-                                    <option value="">Please select</option>
-                                    {% for sub_type in sub_types %}
-                                    <option value="{{ sub_type.id }}">{{ sub_type.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                            <select name="sub_type" id="sub_type"
+                                class="mt-1.5 p-2 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm" required>
+                                <option value="">Please select</option>
+                                {% for sub_type in sub_types %}
+                                <option value="{{ sub_type.id }}">{{ sub_type.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                        </fieldset>
+                    </fieldset>
 
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Size</legend>
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Size</legend>
 
-                            <div class="flex flex-wrap gap-1">
-                                {% for size in sizes %}
-                                <label for="sub_{{ size.name }}" class="cursor-pointer">
+                        <div class="flex flex-wrap gap-1">
+                            {% for size in sizes %}
+                            <label for="sub_{{ size.name }}" class="cursor-pointer">
 
-                                    <input type="radio" name="sub_size" id="sub_{{ size.name }}"
-                                        class="peer sr-only sub_size" value="{{ size.id }}" />
+                                <input type="radio" name="sub_size" id="sub_{{ size.name }}"
+                                    class="peer sr-only sub_size" value="{{ size.id }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ size.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="mt-4">
+                        <legend class="mb-3 text-md font-medium">Extras</legend>
+                        <!--    <p class="mb-3 text-xs font-small">Select up to 4 toppings</p> -->
+                        <div class="flex flex-wrap gap-5">
+                            {% for extra in extras %}
+                            <div class="flex flex-wrap gap-1 w-48">
+                                <label for="{{ extra.name }}" class="relative h-6 w-11 cursor-pointer">
+
+                                    <input type="checkbox" id="{{ extra.name }}" class="peer sr-only extra"
+                                        value="{{ extra.id }}" />
 
                                     <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ size.name }}
-                                    </span>
+                                        class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
+
+                                    <span
+                                        class="absolute inset-y-0 start-0 m-1 h-4 w-4 rounded-full bg-white transition-all peer-checked:start-4"></span>
+
                                 </label>
-                                {% endfor %}
+                                <span class="text-sm font-semibold">{{ extra.name }}</span>
                             </div>
-                        </fieldset>
+                            {% endfor %}
 
-                        <fieldset class="mt-4">
-                            <legend class="mb-3 text-md font-medium">Extras</legend>
-                            <!--    <p class="mb-3 text-xs font-small">Select up to 4 toppings</p> -->
-                            <div class="flex flex-wrap gap-5">
-                                {% for extra in extras %}
-                                <div class="flex flex-wrap gap-1 w-48">
-                                    <label for="{{ extra.name }}" class="relative h-6 w-11 cursor-pointer">
-
-                                        <input type="checkbox" id="{{ extra.name }}" class="peer sr-only extra"
-                                            value="{{ extra.id }}" />
-
-                                        <span
-                                            class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
-
-                                        <span
-                                            class="absolute inset-y-0 start-0 m-1 h-4 w-4 rounded-full bg-white transition-all peer-checked:start-4"></span>
-
-                                    </label>
-                                    <span class="text-sm font-semibold">{{ extra.name }}</span>
-                                </div>
-                                {% endfor %}
-
-                            </div>
-
-                        </fieldset>
-
-                        <div class="mt-8 flex gap-4">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" min="1" value="1" id="sub_quantity"
-                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                            </div>
-
-                            <button type="submit" id="sub_submit" style="display: none;"
-                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                Add to Cart
-                            </button>
                         </div>
-                    </form>
-                </div>
+
+                    </fieldset>
+
+                    <div class="mt-8 flex gap-4">
+                        <div>
+                            <label for="quantity" class="sr-only">Qty</label>
+
+                            <input type="number" min="1" value="1" id="sub_quantity"
+                                class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                        </div>
+
+                        <button type="submit" id="sub_submit" style="display: none;"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- PASTA SECTION ********************************************************************** -->
+<!-- PASTA SECTION ********************************************************************** -->
 
-    <section>
-        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <img alt="Les Paul"
-                        src="https://images.immediate.co.uk/production/volatile/sites/30/2021/04/Pasta-alla-vodka-f1d2e1c.jpg"
-                        class="aspect-square w-full rounded-xl object-cover" />
-                </div>
+<section>
+    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                <img alt="Les Paul"
+                    src="https://images.immediate.co.uk/production/volatile/sites/30/2021/04/Pasta-alla-vodka-f1d2e1c.jpg"
+                    class="aspect-square w-full rounded-xl object-cover" />
+            </div>
 
-                <div class="sticky top-0">
+            <div class="sticky top-0">
 
-                    <div class="flex justify-between">
-                        <div class="max-w-[35ch] space-y-2">
-                            <h1 class="text-xl font-bold sm:text-2xl">
-                                Pasta
-                            </h1>
-                        </div>
-
-                        <p id="pasta_price" class="text-lg font-bold"></p>
+                <div class="flex justify-between">
+                    <div class="max-w-[35ch] space-y-2">
+                        <h1 class="text-xl font-bold sm:text-2xl">
+                            Pasta
+                        </h1>
                     </div>
 
-                    <div>
-                        <div class="prose max-w-none">
-                            <p>
-                                Select the pasta flavor that fits your needs and desires
-                            </p>
-                        </div>
-                    </div>
-
-                    <form class="mt-4" id="pasta_form">
-
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Flavor</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                {% for pasta in pastas %}
-                                <label for="sub_{{ pasta.name }}" class="cursor-pointer">
-
-                                    <input type="radio" name="pasta" id="sub_{{ pasta.name }}"
-                                        class="peer sr-only pasta" value="{{ pasta.id }}" price="{{ pasta.price }}" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ pasta.name }}
-                                    </span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </fieldset>
-
-                        <div class="mt-8 flex gap-4">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" min="1" value="1" id="pasta_quantity"
-                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                            </div>
-
-                            <button type="submit" id="pasta_submit" style="display: none;"
-                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </form>
+                    <p id="pasta_price" class="text-lg font-bold"></p>
                 </div>
+
+                <div>
+                    <div class="prose max-w-none">
+                        <p>
+                            Select the pasta flavor that fits your needs and desires
+                        </p>
+                    </div>
+                </div>
+
+                <form class="mt-4" id="pasta_form">
+
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                        <div class="flex flex-wrap gap-1">
+                            {% for pasta in pastas %}
+                            <label for="sub_{{ pasta.name }}" class="cursor-pointer">
+
+                                <input type="radio" name="pasta" id="sub_{{ pasta.name }}" class="peer sr-only pasta"
+                                    value="{{ pasta.id }}" price="{{ pasta.price }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ pasta.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <div class="mt-8 flex gap-4">
+                        <div>
+                            <label for="quantity" class="sr-only">Qty</label>
+
+                            <input type="number" min="1" value="1" id="pasta_quantity"
+                                class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                        </div>
+
+                        <button type="submit" id="pasta_submit" style="display: none;"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SALAD SECTION ********************************************************************** -->
+<!-- SALAD SECTION ********************************************************************** -->
 
-    <section>
-        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <img alt="Les Paul"
-                        src="https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg"
-                        class="aspect-square w-full rounded-xl object-cover" />
-                </div>
+<section>
+    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                <img alt="Les Paul"
+                    src="https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg"
+                    class="aspect-square w-full rounded-xl object-cover" />
+            </div>
 
-                <div class="sticky top-0">
+            <div class="sticky top-0">
 
-                    <div class="flex justify-between">
-                        <div class="max-w-[35ch] space-y-2">
-                            <h1 class="text-xl font-bold sm:text-2xl">
-                                Salad
-                            </h1>
-                        </div>
-
-                        <p id="salad_price" class="text-lg font-bold"></p>
+                <div class="flex justify-between">
+                    <div class="max-w-[35ch] space-y-2">
+                        <h1 class="text-xl font-bold sm:text-2xl">
+                            Salad
+                        </h1>
                     </div>
 
-                    <div>
-                        <div class="prose max-w-none">
-                            <p>
-                                Select the salad flavor that fits your needs and desires
-                            </p>
-                        </div>
-                    </div>
-
-                    <form class="mt-4" id="salad_form">
-
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Flavor</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                {% for salad in salads %}
-                                <label for="sub_{{ salad.name }}" class="cursor-pointer">
-
-                                    <input type="radio" name="salad" id="sub_{{ salad.name }}"
-                                        class="peer sr-only salad" value="{{ salad.id }}" price="{{ salad.price }}" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ salad.name }}
-                                    </span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </fieldset>
-
-                        <div class="mt-8 flex gap-4">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" min="1" value="1" id="salad_quantity"
-                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                            </div>
-
-                            <button type="submit" id="salad_submit" style="display: none;"
-                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </form>
+                    <p id="salad_price" class="text-lg font-bold"></p>
                 </div>
+
+                <div>
+                    <div class="prose max-w-none">
+                        <p>
+                            Select the salad flavor that fits your needs and desires
+                        </p>
+                    </div>
+                </div>
+
+                <form class="mt-4" id="salad_form">
+
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                        <div class="flex flex-wrap gap-1">
+                            {% for salad in salads %}
+                            <label for="sub_{{ salad.name }}" class="cursor-pointer">
+
+                                <input type="radio" name="salad" id="sub_{{ salad.name }}" class="peer sr-only salad"
+                                    value="{{ salad.id }}" price="{{ salad.price }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ salad.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <div class="mt-8 flex gap-4">
+                        <div>
+                            <label for="quantity" class="sr-only">Qty</label>
+
+                            <input type="number" min="1" value="1" id="salad_quantity"
+                                class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                        </div>
+
+                        <button type="submit" id="salad_submit" style="display: none;"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SALAD SECTION ********************************************************************** -->
+<!-- SALAD SECTION ********************************************************************** -->
 
-    <section>
-        <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-            <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <img alt="Les Paul"
-                        src="https://www.organizeyourselfskinny.com/wp-content/uploads/2022/02/chicken-meatball-parm-feature.jpg"
-                        class="aspect-square w-full rounded-xl object-cover" />
-                </div>
+<section>
+    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+                <img alt="Les Paul"
+                    src="https://www.organizeyourselfskinny.com/wp-content/uploads/2022/02/chicken-meatball-parm-feature.jpg"
+                    class="aspect-square w-full rounded-xl object-cover" />
+            </div>
 
-                <div class="sticky top-0">
+            <div class="sticky top-0">
 
-                    <div class="flex justify-between">
-                        <div class="max-w-[35ch] space-y-2">
-                            <h1 class="text-xl font-bold sm:text-2xl">
-                                Dinner Platters
-                            </h1>
-                        </div>
-
-                        <p id="dp_price" class="text-lg font-bold"></p>
+                <div class="flex justify-between">
+                    <div class="max-w-[35ch] space-y-2">
+                        <h1 class="text-xl font-bold sm:text-2xl">
+                            Dinner Platters
+                        </h1>
                     </div>
 
-                    <div>
-                        <div class="prose max-w-none">
-                            <p>
-                                Select the Dinner Platter flavor an size that fits your needs and desires
-                            </p>
-                        </div>
-                    </div>
-
-                    <form class="mt-4" id="dp_form">
-
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Flavor</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                {% for dp in dps %}
-                                <label for="dp_{{ dp.name }}" class="cursor-pointer">
-
-                                    <input type="radio" name="dp" id="dp_{{ dp.name }}" class="peer sr-only dp_type"
-                                        value="{{ dp.id }}" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ dp.name }}
-                                    </span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="mb-3">
-                            <legend class="mb-1 text-md font-medium">Size</legend>
-
-                            <div class="flex flex-wrap gap-1">
-                                {% for size in sizes %}
-                                <label for="dp_{{ size.name }}" class="cursor-pointer">
-
-                                    <input type="radio" name="dp_size" id="dp_{{ size.name }}"
-                                        class="peer sr-only dp_size" value="{{ size.id }}" />
-
-                                    <span
-                                        class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                                        {{ size.name }}
-                                    </span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </fieldset>
-
-                        <div class="mt-8 flex gap-4">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" min="1" value="1" id="dp_quantity"
-                                    class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
-                            </div>
-
-                            <button type="submit" id="dp_submit" style="display: none;"
-                                class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </form>
+                    <p id="dp_price" class="text-lg font-bold"></p>
                 </div>
+
+                <div>
+                    <div class="prose max-w-none">
+                        <p>
+                            Select the Dinner Platter flavor an size that fits your needs and desires
+                        </p>
+                    </div>
+                </div>
+
+                <form class="mt-4" id="dp_form">
+
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Flavor</legend>
+
+                        <div class="flex flex-wrap gap-1">
+                            {% for dp in dps %}
+                            <label for="dp_{{ dp.name }}" class="cursor-pointer">
+
+                                <input type="radio" name="dp" id="dp_{{ dp.name }}" class="peer sr-only dp_type"
+                                    value="{{ dp.id }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ dp.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="mb-3">
+                        <legend class="mb-1 text-md font-medium">Size</legend>
+
+                        <div class="flex flex-wrap gap-1">
+                            {% for size in sizes %}
+                            <label for="dp_{{ size.name }}" class="cursor-pointer">
+
+                                <input type="radio" name="dp_size" id="dp_{{ size.name }}" class="peer sr-only dp_size"
+                                    value="{{ size.id }}" />
+
+                                <span
+                                    class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
+                                    {{ size.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <div class="mt-8 flex gap-4">
+                        <div>
+                            <label for="quantity" class="sr-only">Qty</label>
+
+                            <input type="number" min="1" value="1" id="dp_quantity"
+                                class="w-12 rounded border-gray-200 py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                        </div>
+
+                        <button type="submit" id="dp_submit" style="display: none;"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500">
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- JS SECTION ********************************************************************** -->
-    <script>
-        /* Allow max 4 topping checkboxes checked */
+<!-- JS SECTION ********************************************************************** -->
+<script>
+    /* Allow max 4 topping checkboxes checked */
+
+    // Obtener todos los checkboxes con la clase "topping"
+    const checkboxes = document.querySelectorAll('.topping');
+
+    // Establecer el número máximo permitido de checkboxes seleccionados
+    const maxAllowed = 4;
+
+    // Función para contar los checkboxes seleccionados
+    function countSelectedCheckboxes() {
+        let count = 0;
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                count++;
+            }
+        });
+        return count;
+    }
+
+    // Función para controlar el evento de cambio de los checkboxes
+    function handleCheckboxChange(event) {
+        const selectedCount = countSelectedCheckboxes();
+
+        if (selectedCount > maxAllowed) {
+            event.target.checked = false; // Desmarca el checkbox seleccionado si se excede el límite
+        }
+    }
+
+    // Agregar el controlador de eventos a todos los checkboxes
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', handleCheckboxChange);
+    });
+
+    /*****************************************************************************************************************/
+
+    let pizzaPriceText = document.getElementById('pizza_price');
+    let pizzaSubmitButton = document.getElementById('pizza_submit');
+    let selectedPizzaPrice = 0;
+    let selectedPizzaProduct = 0;
+    let selectedPizzaDetail = 0;
+    let selectedToppings = [];
+
+
+    function updatePizzaData(valid, response) {
+        if (valid) {
+            selectedPizzaPrice = response.price;
+            selectedPizzaProduct = response.product_id;
+            selectedPizzaDetail = response.detail_id;
+            //console.log(response.price)
+            pizzaPriceText.innerHTML = "$ " + selectedPizzaPrice;
+            pizzaSubmitButton.style.display = "block";
+        } else {
+            selectedPizzaPrice = 0;
+            pizzaPriceText.innerHTML = "Product not found";
+            pizzaSubmitButton.style.display = "none";
+        }
+    }
+
+    /* Make AJAX request if pizza data ready */
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener todos los elementos de tipo radio con la clase "pizza_type"
+        const pizzaTypeRadios = document.querySelectorAll('.pizza_type');
+
+        // Obtener todos los elementos de tipo radio con la clase "pizza_size"
+        const pizzaSizeRadios = document.querySelectorAll('.pizza_size');
 
         // Obtener todos los checkboxes con la clase "topping"
-        const checkboxes = document.querySelectorAll('.topping');
+        const toppingCheckboxes = document.querySelectorAll('.topping');
 
-        // Establecer el número máximo permitido de checkboxes seleccionados
-        const maxAllowed = 4;
+        let pizzaTypeValue = '';
+        let pizzaSizeValue = '';
 
         // Función para contar los checkboxes seleccionados
         function countSelectedCheckboxes() {
             let count = 0;
-            checkboxes.forEach((checkbox) => {
+            toppingCheckboxes.forEach((checkbox) => {
                 if (checkbox.checked) {
                     count++;
                 }
@@ -574,179 +568,23 @@
             return count;
         }
 
-        // Función para controlar el evento de cambio de los checkboxes
-        function handleCheckboxChange(event) {
-            const selectedCount = countSelectedCheckboxes();
+        // Función para realizar la petición AJAX
+        function makeAjaxRequest() {
+            // Obtener la cantidad de checkboxes seleccionados
+            console.log(" petición AJAX.");
+            const selectedToppingsCount = countSelectedCheckboxes();
 
-            if (selectedCount > maxAllowed) {
-                event.target.checked = false; // Desmarca el checkbox seleccionado si se excede el límite
-            }
-        }
-
-        // Agregar el controlador de eventos a todos los checkboxes
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', handleCheckboxChange);
-        });
-
-        /*****************************************************************************************************************/
-
-        let pizzaPriceText = document.getElementById('pizza_price');
-        let pizzaSubmitButton = document.getElementById('pizza_submit');
-        let selectedPizzaPrice = 0;
-        let selectedPizzaProduct = 0;
-        let selectedPizzaDetail = 0;
-        let selectedToppings = [];
-
-
-        function updatePizzaData(valid, response) {
-            if (valid) {
-                selectedPizzaPrice = response.price;
-                selectedPizzaProduct = response.product_id;
-                selectedPizzaDetail = response.detail_id;
-                //console.log(response.price)
-                pizzaPriceText.innerHTML = "$ " + selectedPizzaPrice;
-                pizzaSubmitButton.style.display = "block";
-            } else {
-                selectedPizzaPrice = 0;
-                pizzaPriceText.innerHTML = "Product not found";
-                pizzaSubmitButton.style.display = "none";
-            }
-        }
-
-        /* Make AJAX request if pizza data ready */
-        document.addEventListener('DOMContentLoaded', function () {
-            // Obtener todos los elementos de tipo radio con la clase "pizza_type"
-            const pizzaTypeRadios = document.querySelectorAll('.pizza_type');
-
-            // Obtener todos los elementos de tipo radio con la clase "pizza_size"
-            const pizzaSizeRadios = document.querySelectorAll('.pizza_size');
-
-            // Obtener todos los checkboxes con la clase "topping"
-            const toppingCheckboxes = document.querySelectorAll('.topping');
-
-            let pizzaTypeValue = '';
-            let pizzaSizeValue = '';
-
-            // Función para contar los checkboxes seleccionados
-            function countSelectedCheckboxes() {
-                let count = 0;
-                toppingCheckboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
-                        count++;
-                    }
-                });
-                return count;
-            }
-
-            // Función para realizar la petición AJAX
-            function makeAjaxRequest() {
-                // Obtener la cantidad de checkboxes seleccionados
-                console.log(" petición AJAX.");
-                const selectedToppingsCount = countSelectedCheckboxes();
-
-                if (selectedToppingsCount <= maxAllowed) {
-                    const requestData = {
-                        pizza_type: pizzaTypeValue,
-                        pizza_size: pizzaSizeValue,
-                        toppings_count: selectedToppingsCount
-                    };
-
-                    console.log(requestData);
-
-                    $.ajax({
-                        url: '/pizza_price',
-                        type: 'POST',
-                        data: requestData,
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        success: function (response) {
-                            // Maneja la respuesta exitosa
-                            console.log(response.price);
-
-
-                            updatePizzaData(true, response);
-                        },
-                        error: function (xhr, status, error) {
-                            // Maneja el error
-                            console.error(error);
-                            updatePizzaData(false, error);
-
-                        }
-                    });
-                }
-
-            }
-
-            // Función para verificar las condiciones y realizar la petición AJAX
-            function checkConditionsAndMakeRequest() {
-                let pizzaTypeChecked = false;
-                let pizzaSizeChecked = false;
-
-                // Obtener el valor del input de pizza_type seleccionado
-                const pizzaTypeInputs = document.querySelectorAll('.pizza_type');
-
-                pizzaTypeInputs.forEach((input) => {
-                    if (input.checked) {
-                        pizzaTypeChecked = true;
-                        pizzaTypeValue = input.value;
-                    }
-                });
-
-                // Obtener el valor del input de pizza_size seleccionado
-                const pizzaSizeInputs = document.querySelectorAll('.pizza_size');
-
-                pizzaSizeInputs.forEach((input) => {
-                    if (input.checked) {
-                        pizzaSizeChecked = true;
-                        pizzaSizeValue = input.value;
-                    }
-                });
-
-                // Verificar las condiciones
-                if (pizzaTypeChecked && pizzaSizeChecked) {
-                    makeAjaxRequest();
-                } else {
-                    console.log("No se cumplen las condiciones para hacer la petición AJAX.");
-                }
-            }
-
-            // Obtener el formulario con el ID "pizza_form"
-            const pizzaForm = document.getElementById('pizza_form');
-
-            // Agregar un evento 'click' al formulario
-            pizzaForm.addEventListener('click', function (event) {
-                // Verificar si el objetivo del evento es un input dentro del formulario
-                if (event.target.tagName === 'INPUT') {
-                    // Verificar las condiciones y realizar la petición AJAX
-                    checkConditionsAndMakeRequest();
-                }
-            });
-
-
-            // Pizza add to cart
-
-            pizzaForm.onsubmit = (e) => {
-                e.preventDefault();
-                let selectedToppings = [];
-                toppingCheckboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
-                        selectedToppings.push(checkbox.value);
-                    }
-                });
-                let pizza_quantity = pizzaForm.querySelector('#pizza_quantity').value;
-                //console.log(pizza_quantity);
+            if (selectedToppingsCount <= maxAllowed) {
                 const requestData = {
-                    product_id: selectedPizzaProduct,
-                    quantity: pizza_quantity,
-                    toppings: selectedToppings,
+                    pizza_type: pizzaTypeValue,
+                    pizza_size: pizzaSizeValue,
+                    toppings_count: selectedToppingsCount
                 };
 
                 console.log(requestData);
 
                 $.ajax({
-                    url: '/add_pizza_cart',
+                    url: '/pizza_price',
                     type: 'POST',
                     data: requestData,
                     dataType: 'json',
@@ -754,213 +592,91 @@
                         'X-CSRFToken': '{{ csrf_token }}'
                     },
                     success: function (response) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    }
-                });
-            }
-        })
-
-        /*****************************************************************************************************************/
-
-        let subPriceText = document.getElementById('sub_price');
-        let subSubmitButton = document.getElementById('sub_submit');
-        let selectedSubPrice = 0;
-        let selectedSubProduct = 0;
-        let selectedSubDetail = 0;
-        let selectedExtras = [];
-
-        let subTypeValue = '';
-        let subSizeValue = '';
-
-
-        function updateSubData(response) {
-            if (response.price != 'error') {
-                selectedSubPrice = response.price;
-                selectedSubProduct = response.product_id;
-                selectedSubDetail = response.detail_id;
-                //console.log(response.price)
-                subPriceText.innerHTML = "$ " + selectedSubPrice;
-                subSubmitButton.style.display = "block";
-            } else {
-                selectedSubPrice = 0;
-                subPriceText.innerHTML = "Product not found";
-                subSubmitButton.style.display = "none";
-            }
-        }
-
-        /* Make AJAX request if pizza data ready */
-        document.addEventListener('DOMContentLoaded', function () {
-            const extraCheckboxes = document.querySelectorAll('.extra');
-
-            // Función para realizar la petición AJAX
-            function makeSubAjaxRequest() {
-                console.log("SUB petición AJAX.");
-
-                selectedExtras = [];
-                extraCheckboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
-                        selectedExtras.push(checkbox.value);
-                    }
-                });
-
-                const requestData = {
-                    sub_type: subTypeValue,
-                    sub_size: subSizeValue,
-                    extras: selectedExtras
-                };
-
-                console.log(requestData);
-
-                $.ajax({
-                    url: '/sub_price',
-                    type: 'POST',
-                    data: requestData,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    success: function (response) {
+                        // Maneja la respuesta exitosa
                         console.log(response.price);
-                        updateSubData(response);
+
+
+                        updatePizzaData(true, response);
                     },
                     error: function (xhr, status, error) {
+                        // Maneja el error
                         console.error(error);
+                        updatePizzaData(false, error);
+
                     }
                 });
             }
 
-            // Función para verificar las condiciones y realizar la petición AJAX
-            function checkSubConditions() {
-                let subTypeSelected = false;
-                let subSizeChecked = false;
+        }
 
-                // Obtener el valor del input de pizza_type seleccionado
-                const subTypeInput = document.querySelector('#sub_type');
+        // Función para verificar las condiciones y realizar la petición AJAX
+        function checkConditionsAndMakeRequest() {
+            let pizzaTypeChecked = false;
+            let pizzaSizeChecked = false;
 
-                if (subTypeInput.value != "") {
-                    subTypeSelected = true;
-                    subTypeValue = subTypeInput.value;
-                }
+            // Obtener el valor del input de pizza_type seleccionado
+            const pizzaTypeInputs = document.querySelectorAll('.pizza_type');
 
-
-                // Obtener el valor del input de pizza_size seleccionado
-                const subSizeInputs = document.querySelectorAll('.sub_size');
-
-                subSizeInputs.forEach((input) => {
-                    if (input.checked) {
-                        subSizeChecked = true;
-                        subSizeValue = input.value;
-                    }
-                });
-
-                console.log(subTypeSelected, subSizeChecked)
-                // Verificar las condiciones
-                if (subTypeSelected && subSizeChecked) {
-                    makeSubAjaxRequest();
-                } else {
-                    console.log("No se cumplen las condiciones para hacer la petición SUB AJAX.");
-                }
-            }
-
-            // Obtener el formulario con el ID "pizza_form"
-            const sub_form = document.getElementById('sub_form');
-
-            // Agregar un evento 'click' al formulario
-            sub_form.addEventListener('click', function (event) {
-                // Verificar si el objetivo del evento es un input dentro del formulario
-                if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
-                    // Verificar las condiciones y realizar la petición AJAX
-                    checkSubConditions();
-                    //console.log(selectedExtras)
+            pizzaTypeInputs.forEach((input) => {
+                if (input.checked) {
+                    pizzaTypeChecked = true;
+                    pizzaTypeValue = input.value;
                 }
             });
 
+            // Obtener el valor del input de pizza_size seleccionado
+            const pizzaSizeInputs = document.querySelectorAll('.pizza_size');
 
-            // Sub add to cart
+            pizzaSizeInputs.forEach((input) => {
+                if (input.checked) {
+                    pizzaSizeChecked = true;
+                    pizzaSizeValue = input.value;
+                }
+            });
 
-            sub_form.onsubmit = (e) => {
-                e.preventDefault();
-                let sub_quantity = sub_form.querySelector('#sub_quantity').value;
-                //console.log(pizza_quantity);
-                const requestData = {
-                    product_id: selectedSubProduct,
-                    quantity: sub_quantity,
-                    extras: selectedExtras,
-                };
-
-                console.log(requestData);
-
-                $.ajax({
-                    url: '/add_sub_cart',
-                    type: 'POST',
-                    data: requestData,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    success: function (response) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    }
-                });
+            // Verificar las condiciones
+            if (pizzaTypeChecked && pizzaSizeChecked) {
+                makeAjaxRequest();
+            } else {
+                console.log("No se cumplen las condiciones para hacer la petición AJAX.");
             }
-        })
+        }
 
-        /*****************************************************************************************************************/
+        // Obtener el formulario con el ID "pizza_form"
+        const pizzaForm = document.getElementById('pizza_form');
 
-        let pastaPriceText = document.getElementById('pasta_price');
-        let pastaSubmitButton = document.getElementById('pasta_submit');
-        let selectedPastaPrice = 0;
-        let selectedPastaProduct = 0;
-
-        const pasta_form = document.getElementById('pasta_form');
-
-        pasta_form.addEventListener('click', function (event) {
-            if (event.target.classList.contains('pasta')) {
-
-                selectedPastaPrice = event.target.getAttribute('price');
-                selectedPastaProduct = event.target.value;
-
-                pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
-                pastaSubmitButton.style.display = "block";
-
+        // Agregar un evento 'click' al formulario
+        pizzaForm.addEventListener('click', function (event) {
+            // Verificar si el objetivo del evento es un input dentro del formulario
+            if (event.target.tagName === 'INPUT') {
+                // Verificar las condiciones y realizar la petición AJAX
+                checkConditionsAndMakeRequest();
             }
         });
 
-        // Pasta add to cart
-        pasta_form.onsubmit = (e) => {
+
+        // Pizza add to cart
+
+        pizzaForm.onsubmit = (e) => {
             e.preventDefault();
-            let pasta_quantity = pasta_form.querySelector('#pasta_quantity').value;
+            let selectedToppings = [];
+            toppingCheckboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedToppings.push(checkbox.value);
+                }
+            });
+            let pizza_quantity = pizzaForm.querySelector('#pizza_quantity').value;
+            //console.log(pizza_quantity);
             const requestData = {
-                product_id: selectedPastaProduct,
-                quantity: pasta_quantity,
+                product_id: selectedPizzaProduct,
+                quantity: pizza_quantity,
+                toppings: selectedToppings,
             };
 
             console.log(requestData);
 
             $.ajax({
-                url: '/add_pasta_cart',
+                url: '/add_pizza_cart',
                 type: 'POST',
                 data: requestData,
                 dataType: 'json',
@@ -983,41 +699,140 @@
                 }
             });
         }
+    })
+
+    /*****************************************************************************************************************/
+
+    let subPriceText = document.getElementById('sub_price');
+    let subSubmitButton = document.getElementById('sub_submit');
+    let selectedSubPrice = 0;
+    let selectedSubProduct = 0;
+    let selectedSubDetail = 0;
+    let selectedExtras = [];
+
+    let subTypeValue = '';
+    let subSizeValue = '';
 
 
-        /*****************************************************************************************************************/
+    function updateSubData(response) {
+        if (response.price != 'error') {
+            selectedSubPrice = response.price;
+            selectedSubProduct = response.product_id;
+            selectedSubDetail = response.detail_id;
+            //console.log(response.price)
+            subPriceText.innerHTML = "$ " + selectedSubPrice;
+            subSubmitButton.style.display = "block";
+        } else {
+            selectedSubPrice = 0;
+            subPriceText.innerHTML = "Product not found";
+            subSubmitButton.style.display = "none";
+        }
+    }
 
-        let saladPriceText = document.getElementById('salad_price');
-        let saladSubmitButton = document.getElementById('salad_submit');
-        let selectedSaladPrice = 0;
-        let selectedSaladProduct = 0;
+    /* Make AJAX request if pizza data ready */
+    document.addEventListener('DOMContentLoaded', function () {
+        const extraCheckboxes = document.querySelectorAll('.extra');
 
-        const salad_form = document.getElementById('salad_form');
+        // Función para realizar la petición AJAX
+        function makeSubAjaxRequest() {
+            console.log("SUB petición AJAX.");
 
-        salad_form.addEventListener('click', function (event) {
-            if (event.target.classList.contains('salad')) {
+            selectedExtras = [];
+            extraCheckboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedExtras.push(checkbox.value);
+                }
+            });
 
-                selectedSaladPrice = event.target.getAttribute('price');
-                selectedSaladProduct = event.target.value;
-
-                saladPriceText.innerHTML = "$ " + selectedSaladPrice;
-                saladSubmitButton.style.display = "block";
-            }
-        });
-
-        // Salad add to cart
-        salad_form.onsubmit = (e) => {
-            e.preventDefault();
-            let salad_quantity = salad_form.querySelector('#salad_quantity').value;
             const requestData = {
-                product_id: selectedSaladProduct,
-                quantity: salad_quantity,
+                sub_type: subTypeValue,
+                sub_size: subSizeValue,
+                extras: selectedExtras
             };
 
             console.log(requestData);
 
             $.ajax({
-                url: '/add_salad_cart',
+                url: '/sub_price',
+                type: 'POST',
+                data: requestData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    console.log(response.price);
+                    updateSubData(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Función para verificar las condiciones y realizar la petición AJAX
+        function checkSubConditions() {
+            let subTypeSelected = false;
+            let subSizeChecked = false;
+
+            // Obtener el valor del input de pizza_type seleccionado
+            const subTypeInput = document.querySelector('#sub_type');
+
+            if (subTypeInput.value != "") {
+                subTypeSelected = true;
+                subTypeValue = subTypeInput.value;
+            }
+
+
+            // Obtener el valor del input de pizza_size seleccionado
+            const subSizeInputs = document.querySelectorAll('.sub_size');
+
+            subSizeInputs.forEach((input) => {
+                if (input.checked) {
+                    subSizeChecked = true;
+                    subSizeValue = input.value;
+                }
+            });
+
+            console.log(subTypeSelected, subSizeChecked)
+            // Verificar las condiciones
+            if (subTypeSelected && subSizeChecked) {
+                makeSubAjaxRequest();
+            } else {
+                console.log("No se cumplen las condiciones para hacer la petición SUB AJAX.");
+            }
+        }
+
+        // Obtener el formulario con el ID "pizza_form"
+        const sub_form = document.getElementById('sub_form');
+
+        // Agregar un evento 'click' al formulario
+        sub_form.addEventListener('click', function (event) {
+            // Verificar si el objetivo del evento es un input dentro del formulario
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
+                // Verificar las condiciones y realizar la petición AJAX
+                checkSubConditions();
+                //console.log(selectedExtras)
+            }
+        });
+
+
+        // Sub add to cart
+
+        sub_form.onsubmit = (e) => {
+            e.preventDefault();
+            let sub_quantity = sub_form.querySelector('#sub_quantity').value;
+            //console.log(pizza_quantity);
+            const requestData = {
+                product_id: selectedSubProduct,
+                quantity: sub_quantity,
+                extras: selectedExtras,
+            };
+
+            console.log(requestData);
+
+            $.ajax({
+                url: '/add_sub_cart',
                 type: 'POST',
                 data: requestData,
                 dataType: 'json',
@@ -1031,7 +846,7 @@
                         response.type
                     )
                 },
-                error: function (response) {
+                error: function (xhr, status, error) {
                     Swal.fire(
                         response.title,
                         response.message,
@@ -1040,144 +855,258 @@
                 }
             });
         }
+    })
 
+    /*****************************************************************************************************************/
 
-        /*****************************************************************************************************************/
+    let pastaPriceText = document.getElementById('pasta_price');
+    let pastaSubmitButton = document.getElementById('pasta_submit');
+    let selectedPastaPrice = 0;
+    let selectedPastaProduct = 0;
 
-        let dpPriceText = document.getElementById('dp_price');
-        let dpSubmitButton = document.getElementById('dp_submit');
-        let selectedDpPrice = 0;
-        let selectedDpProduct = 0;
-        let selectedDpDetail = 0;
+    const pasta_form = document.getElementById('pasta_form');
 
-        let dpTypeValue = '';
-        let dpSizeValue = '';
+    pasta_form.addEventListener('click', function (event) {
+        if (event.target.classList.contains('pasta')) {
 
-        function updateDpData(response) {
-            if (response.price != 'error') {
-                selectedDpPrice = response.price;
-                selectedDpProduct = response.product_id;
-                selectedDpDetail = response.detail_id;
-                dpPriceText.innerHTML = "$ " + selectedDpPrice;
-                dpSubmitButton.style.display = "block";
-            } else {
-                selectedDpPrice = 0;
-                dpPriceText.innerHTML = "Product not found";
-                dpSubmitButton.style.display = "none";
+            selectedPastaPrice = event.target.getAttribute('price');
+            selectedPastaProduct = event.target.value;
+
+            pastaPriceText.innerHTML = "$ " + selectedPastaPrice;
+            pastaSubmitButton.style.display = "block";
+
+        }
+    });
+
+    // Pasta add to cart
+    pasta_form.onsubmit = (e) => {
+        e.preventDefault();
+        let pasta_quantity = pasta_form.querySelector('#pasta_quantity').value;
+        const requestData = {
+            product_id: selectedPastaProduct,
+            quantity: pasta_quantity,
+        };
+
+        console.log(requestData);
+
+        $.ajax({
+            url: '/add_pasta_cart',
+            type: 'POST',
+            data: requestData,
+            dataType: 'json',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                Swal.fire(
+                    response.title,
+                    response.message,
+                    response.type
+                )
+            },
+            error: function (xhr, status, error) {
+                Swal.fire(
+                    response.title,
+                    response.message,
+                    response.type
+                )
             }
+        });
+    }
+
+
+    /*****************************************************************************************************************/
+
+    let saladPriceText = document.getElementById('salad_price');
+    let saladSubmitButton = document.getElementById('salad_submit');
+    let selectedSaladPrice = 0;
+    let selectedSaladProduct = 0;
+
+    const salad_form = document.getElementById('salad_form');
+
+    salad_form.addEventListener('click', function (event) {
+        if (event.target.classList.contains('salad')) {
+
+            selectedSaladPrice = event.target.getAttribute('price');
+            selectedSaladProduct = event.target.value;
+
+            saladPriceText.innerHTML = "$ " + selectedSaladPrice;
+            saladSubmitButton.style.display = "block";
+        }
+    });
+
+    // Salad add to cart
+    salad_form.onsubmit = (e) => {
+        e.preventDefault();
+        let salad_quantity = salad_form.querySelector('#salad_quantity').value;
+        const requestData = {
+            product_id: selectedSaladProduct,
+            quantity: salad_quantity,
+        };
+
+        console.log(requestData);
+
+        $.ajax({
+            url: '/add_salad_cart',
+            type: 'POST',
+            data: requestData,
+            dataType: 'json',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                Swal.fire(
+                    response.title,
+                    response.message,
+                    response.type
+                )
+            },
+            error: function (response) {
+                Swal.fire(
+                    response.title,
+                    response.message,
+                    response.type
+                )
+            }
+        });
+    }
+
+
+    /*****************************************************************************************************************/
+
+    let dpPriceText = document.getElementById('dp_price');
+    let dpSubmitButton = document.getElementById('dp_submit');
+    let selectedDpPrice = 0;
+    let selectedDpProduct = 0;
+    let selectedDpDetail = 0;
+
+    let dpTypeValue = '';
+    let dpSizeValue = '';
+
+    function updateDpData(response) {
+        if (response.price != 'error') {
+            selectedDpPrice = response.price;
+            selectedDpProduct = response.product_id;
+            selectedDpDetail = response.detail_id;
+            dpPriceText.innerHTML = "$ " + selectedDpPrice;
+            dpSubmitButton.style.display = "block";
+        } else {
+            selectedDpPrice = 0;
+            dpPriceText.innerHTML = "Product not found";
+            dpSubmitButton.style.display = "none";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Función para realizar la petición AJAX
+        function makeDpAjaxRequest() {
+            console.log("dp petición AJAX.");
+
+            const requestData = {
+                dp_type: dpTypeValue,
+                dp_size: dpSizeValue,
+            };
+
+            console.log(requestData);
+
+            $.ajax({
+                url: '/dp_price',
+                type: 'POST',
+                data: requestData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    console.log(response.price);
+                    updateDpData(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Función para realizar la petición AJAX
-            function makeDpAjaxRequest() {
-                console.log("dp petición AJAX.");
-
-                const requestData = {
-                    dp_type: dpTypeValue,
-                    dp_size: dpSizeValue,
-                };
-
-                console.log(requestData);
-
-                $.ajax({
-                    url: '/dp_price',
-                    type: 'POST',
-                    data: requestData,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    success: function (response) {
-                        console.log(response.price);
-                        updateDpData(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            }
-
-            // Función para verificar las condiciones y realizar la petición AJAX
-            function checkDpConditions() {
-                let dpTypeChecked = false;
-                let dpSizeChecked = false;
+        // Función para verificar las condiciones y realizar la petición AJAX
+        function checkDpConditions() {
+            let dpTypeChecked = false;
+            let dpSizeChecked = false;
 
 
-                const dpTypeInput = document.querySelectorAll('.dp_type');
+            const dpTypeInput = document.querySelectorAll('.dp_type');
 
-                dpTypeInput.forEach((input) => {
-                    if (input.checked) {
-                        dpTypeChecked = true;
-                        dpTypeValue = input.value;
-                    }
-                });
-
-                const dpSizeInput = document.querySelectorAll('.dp_size');
-
-                dpSizeInput.forEach((input) => {
-                    if (input.checked) {
-                        dpSizeChecked = true;
-                        dpSizeValue = input.value;
-                    }
-                });
-
-                // Verificar las condiciones
-                if (dpSizeChecked && dpTypeChecked) {
-                    makeDpAjaxRequest();
-                } else {
-                    console.log("No se cumplen las condiciones para hacer la petición dp AJAX.");
-                }
-            }
-
-            // Obtener el formulario con el ID "pizza_form"
-            const dp_form = document.getElementById('dp_form');
-
-            dp_form.addEventListener('click', function (event) {
-                // Verificar si el objetivo del evento es un input dentro del formulario
-                if (event.target.tagName === 'INPUT') {
-                    // Verificar las condiciones y realizar la petición AJAX
-                    checkDpConditions();
+            dpTypeInput.forEach((input) => {
+                if (input.checked) {
+                    dpTypeChecked = true;
+                    dpTypeValue = input.value;
                 }
             });
 
-            // dp add to cart
-            dp_form.onsubmit = (e) => {
-                e.preventDefault();
-                let dp_quantity = dp_form.querySelector('#dp_quantity').value;
+            const dpSizeInput = document.querySelectorAll('.dp_size');
 
-                const requestData = {
-                    product_id: selectedDpProduct,
-                    quantity: dp_quantity,
-                };
+            dpSizeInput.forEach((input) => {
+                if (input.checked) {
+                    dpSizeChecked = true;
+                    dpSizeValue = input.value;
+                }
+            });
 
-                console.log(requestData);
-
-                $.ajax({
-                    url: '/add_dp_cart',
-                    type: 'POST',
-                    data: requestData,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    success: function (response) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire(
-                            response.title,
-                            response.message,
-                            response.type
-                        )
-                    }
-                });
+            // Verificar las condiciones
+            if (dpSizeChecked && dpTypeChecked) {
+                makeDpAjaxRequest();
+            } else {
+                console.log("No se cumplen las condiciones para hacer la petición dp AJAX.");
             }
-        })
-    </script>
-</body>
+        }
 
-</html>
+        // Obtener el formulario con el ID "pizza_form"
+        const dp_form = document.getElementById('dp_form');
+
+        dp_form.addEventListener('click', function (event) {
+            // Verificar si el objetivo del evento es un input dentro del formulario
+            if (event.target.tagName === 'INPUT') {
+                // Verificar las condiciones y realizar la petición AJAX
+                checkDpConditions();
+            }
+        });
+
+        // dp add to cart
+        dp_form.onsubmit = (e) => {
+            e.preventDefault();
+            let dp_quantity = dp_form.querySelector('#dp_quantity').value;
+
+            const requestData = {
+                product_id: selectedDpProduct,
+                quantity: dp_quantity,
+            };
+
+            console.log(requestData);
+
+            $.ajax({
+                url: '/add_dp_cart',
+                type: 'POST',
+                data: requestData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire(
+                        response.title,
+                        response.message,
+                        response.type
+                    )
+                }
+            });
+        }
+    })
+</script>
+
+{% endblock %}

@@ -11,6 +11,7 @@ urlpatterns = [
     path("not_login", views.index, name="index"),
     
     path("", views.menu, name="menu"),
+    path("cart", views.cart, name="cart"),
     
     path("pizza_price", views.pizza_price, name="pizza_price"),
     path("add_pizza_cart", views.add_pizza_cart, name="add_pizza_cart"),
