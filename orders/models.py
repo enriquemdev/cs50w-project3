@@ -129,6 +129,7 @@ class Cart(models.Model):
         sold_status = "Sold" if self.is_sold else "Not Sold"
         return f"Cart #{self.pk} - User: {self.user_id.username}, Product: {self.product_id}, {sold_status}"
     
+    
     # For when there is a product on cart that is pizza and has toppings
 class ToppingsCart(models.Model):
     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)

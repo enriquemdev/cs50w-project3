@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import never_cache
-from django.db.models import Sum
+from django.db.models import Sum, F, Q
+from django.db.models.functions import Coalesce
 
 # Models
 from orders.models import *
@@ -97,52 +98,61 @@ def menu(request):
 def cart(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
-            user = request.user
             
-            # cart_items = Cart.objects.filter(user_id=user, is_sold=False) \
-            #                 .values('id', 'product_id') \
-            #                 .annotate(total_quantity=Sum('quantity'), product_name=models.F('product_id__name'), product_price=models.F('product_id__price'))
-                
-            # print(extraType)
-            # data = {
-            #     'sizes': sizes,
-            #     'pizza_types': pizza_types,
-            #     'toppings': toppings,
-            #     'sub_types': sub_types,
-            #     'extras': extras,
-            #     'pastas': pastas,
-            #     'salads': salads,
-            #     'dps': dps,
-            # }
+            images = {
+                1: 'https://www.simplyrecipes.com/thmb/I4razizFmeF8ua2jwuD0Pq4XpP8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-4-82c60893fcad4ade906a8a9f59b8da9d.jpg',
+                2: 'https://goodcheapeats.com/wp-content/uploads/2021/06/two-italian-subs-square-no-bg-green.jpg',
+                4: 'https://images.immediate.co.uk/production/volatile/sites/30/2021/04/Pasta-alla-vodka-f1d2e1c.jpg',
+                5: 'https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg',
+                6: 'https://www.organizeyourselfskinny.com/wp-content/uploads/2022/02/chicken-meatball-parm-feature.jpg'
+            }
+                      
+            user = request.user            
             
-            # cart_items_list = list(cart_items)
-            
-            # Obtener el usuario autenticado
-            user = request.user
-
-            # Obtener todos los registros del modelo Cart del usuario autenticado
             cart_items = Cart.objects.filter(user_id=user, is_sold=False)
 
-            # Obtener los datos del modelo Product relacionados con los registros del modelo Cart
-            cart_items = cart_items.select_related('product_id')
+            # Retrieve the product information and sum the quantity, grouped by product_id
+            aggregated_cart_items = cart_items.values('id', 'product_id', 'quantity', 'created_at').order_by('-created_at')
 
-            # Anotar la suma de la columna quantity agrupada por product_id
-            cart_items = cart_items.annotate(total_quantity=Sum('quantity'))
+            # Create an empty list to store the final result
+            result = []
 
-            # Obtener las filas relacionadas del modelo ToppingsCart y del modelo ExtrasCart
-            cart_items = cart_items.prefetch_related('toppingscart_set__topping_id', 'extrascart_set__extra_id')
+            # Iterate through each item in the aggregated_cart_items queryset
+            for item in aggregated_cart_items:
+                print(item)
+                # Get the product associated with this item
+                product = Product.objects.get(id=item['product_id'])
+                
+                item['total_price'] = product.price * item['quantity']
+                # Get all toppings related to this cart item
+                toppings = ToppingsCart.objects.filter(cart_id=item['id']).select_related('topping_id')
+                
+                # Get all extras related to this cart item
+                extras = ExtrasCart.objects.filter(cart_id=item['id']).select_related('extra_id')
+                
+                # Calculate the total price of extras for this cart item
+                total_extras_price = sum(extra.extra_id.price for extra in extras)
+                
+                # Create a dictionary to store the required information for this cart item
+                cart_data = {
+                    'cart_id': item['id'],
+                    'product': product,
+                    'quantity': item['quantity'],
+                    'toppings': list(toppings),
+                    'extras': list(extras),
+                    # 'total_extras_price': total_extras_price,
+                    # 'total_price': item['total_price'],
+                    'total_final_price': item['total_price'] + total_extras_price,
+                    'date': item['created_at'],
+                    'image': images[product.product_type_id.id],
+                }
+                
+                # Append the cart_data to the result list
+                result.append(cart_data)
+                
 
-            cart_items_list = list(cart_items)
 
-            listt = []
-            # Imprimir todos los elementos que contiene cart_items[0] (opcional)
-            if cart_items_list:
-                for i in cart_items_list:
-                    cart_item_data = vars(i)
-                    listt.append(cart_item_data)
-                    print(cart_item_data)
-                    print()
-            return render(request, 'cart.html', {'data': listt})
+            return render(request, 'cart.html', {'cart_items': result})
     else:
         return redirect('/login')
     
