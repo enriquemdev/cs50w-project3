@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import never_cache
-from django.db.models import Sum, F, Q
-from django.db.models.functions import Coalesce
+from django.db.models import Sum
+from django.core.exceptions import ObjectDoesNotExist
 
 # Models
 from orders.models import *
@@ -116,6 +116,7 @@ def cart(request):
 
             # Create an empty list to store the final result
             result = []
+            total_cart = 0
 
             # Iterate through each item in the aggregated_cart_items queryset
             for item in aggregated_cart_items:
@@ -147,12 +148,14 @@ def cart(request):
                     'image': images[product.product_type_id.id],
                 }
                 
+                total_cart += cart_data['total_final_price']
+                
                 # Append the cart_data to the result list
                 result.append(cart_data)
                 
 
 
-            return render(request, 'cart.html', {'cart_items': result})
+            return render(request, 'cart.html', {'cart_items': result, 'total_cart': total_cart})
     else:
         return redirect('/login')
     
@@ -412,6 +415,47 @@ def add_dp_cart(request):
             return JsonResponse({'title': 'Perfect!', 'message': 'Item saved to cart succesfully', 'type': 'success'}) 
         except:
             return JsonResponse({'title': 'Oops!', 'message': 'Could not save item to cart', 'type': 'error'}) 
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+  
+        
+def place_order(request):
+    if request.method == 'POST':
+        user = request.user
+        try:
+            cart_items = Cart.objects.filter(user_id=user, is_sold=False)
+        except ObjectDoesNotExist:
+            # Aquí manejas la excepción si no se encuentran elementos en el carrito
+            error_message = "El carrito no contiene elementos."
+            return JsonResponse({'error': error_message})
+        except Exception as e:
+            # Aquí manejas otras excepciones que puedan ocurrir durante la consulta
+            error_message = f"Se produjo un error en la consulta: {e}"
+            return JsonResponse({'error': error_message})
+
+        try:
+            new_sale = Sale(
+                user_id=user,
+                total=request.POST.get('total'),
+            )
+            
+            new_sale.save()
+            
+            for cart in cart_items:
+                cart.is_sold = True
+                cart.save()
+                
+                new_sale_detail = Sale_Detail(
+                    sale_id=new_sale,
+                    cart_id=cart,
+                )
+                new_sale_detail.save()
+            return JsonResponse({'message': "Order placed succesfully"})
+        except Exception as e:
+            # Aquí manejas otras excepciones que puedan ocurrir durante la consulta
+            error_message = f"Se produjo un error en la consulta: {e}"
+            return JsonResponse({'error': error_message})
 
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)

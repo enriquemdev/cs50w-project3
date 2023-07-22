@@ -23,5 +23,8 @@ urlpatterns = [
     
     path("dp_price", views.dp_price, name="dp_price"),
     path("add_dp_cart", views.add_dp_cart, name="add_dp_cart"),
+    
+    path("place_order", views.place_order, name="place_order"),
+    path("orders", views.orders, name="orders"),
 
 ]
