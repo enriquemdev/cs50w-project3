@@ -120,7 +120,7 @@ def cart(request):
 
             # Iterate through each item in the aggregated_cart_items queryset
             for item in aggregated_cart_items:
-                print(item)
+                # print(item)
                 # Get the product associated with this item
                 product = Product.objects.get(id=item['product_id'])
                 
@@ -156,6 +156,88 @@ def cart(request):
 
 
             return render(request, 'cart.html', {'cart_items': result, 'total_cart': total_cart})
+    else:
+        return redirect('/login')
+    
+def orders(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            
+            images = {
+                1: 'https://www.simplyrecipes.com/thmb/I4razizFmeF8ua2jwuD0Pq4XpP8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-4-82c60893fcad4ade906a8a9f59b8da9d.jpg',
+                2: 'https://goodcheapeats.com/wp-content/uploads/2021/06/two-italian-subs-square-no-bg-green.jpg',
+                4: 'https://images.immediate.co.uk/production/volatile/sites/30/2021/04/Pasta-alla-vodka-f1d2e1c.jpg',
+                5: 'https://www.eatingwell.com/thmb/tOraypX2Z2ZztcmM2EhoppQW0jE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1219x879:1221x881)/chopped-power-salad-with-chicken-0ad93f1931524a679c0f8854d74e6e57.jpg',
+                6: 'https://www.organizeyourselfskinny.com/wp-content/uploads/2022/02/chicken-meatball-parm-feature.jpg'
+            }
+                      
+            user = request.user       
+            
+            # Get all the sales made of the currrent user
+            sales = Sale.objects.filter(user_id=user)
+            
+            # Here we gonna save dicts with sale info and the cart items involved
+            sales_info = []
+            
+            for sale in sales:
+            
+                # Carefully watch how we get the items related to each sale using the inverse relationship Cart items have with sale_details
+                cart_items = Cart.objects.filter(sale_detail__sale_id=sale)
+
+                # The rest is just the same as the cart template, only now we make it several times
+                
+                # Retrieve the product information and sum the quantity, grouped by product_id
+                aggregated_cart_items = cart_items.values('id', 'product_id', 'quantity', 'created_at').order_by('-created_at')
+
+                # Create an empty list to store the final result
+                result = []
+                total_cart = 0
+
+                # Iterate through each item in the aggregated_cart_items queryset
+                for item in aggregated_cart_items:
+                    # print(item)
+                    # Get the product associated with this item
+                    product = Product.objects.get(id=item['product_id'])
+                    
+                    item['total_price'] = product.price * item['quantity']
+                    # Get all toppings related to this cart item
+                    toppings = ToppingsCart.objects.filter(cart_id=item['id']).select_related('topping_id')
+                    
+                    # Get all extras related to this cart item
+                    extras = ExtrasCart.objects.filter(cart_id=item['id']).select_related('extra_id')
+                    
+                    # Calculate the total price of extras for this cart item
+                    total_extras_price = sum(extra.extra_id.price for extra in extras)
+                    
+                    # Create a dictionary to store the required information for this cart item
+                    cart_data = {
+                        'cart_id': item['id'],
+                        'product': product,
+                        'quantity': item['quantity'],
+                        'toppings': list(toppings),
+                        'extras': list(extras),
+                        'total_final_price': item['total_price'] + total_extras_price,
+                        'date': item['created_at'],
+                        'image': images[product.product_type_id.id],
+                    }
+                    
+                    total_cart += cart_data['total_final_price']
+                    
+                    # Append the cart_data to the result list
+                    result.append(cart_data)
+                
+                # at the end of the iteration of a sale, we save the sale info and the carts involved
+                sale_data = {
+                    'carts_data': result,
+                    'sale_data': sale,
+                }
+                
+                # And append it to the list
+                sales_info.append(sale_data)  
+                
+            # print(sales_info)
+                
+            return render(request, 'orders.html', {'sales': sales_info})
     else:
         return redirect('/login')
     

@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<!--
+  Heads up! 👋
+
+  Plugins:
+    - @tailwindcss/forms
+-->
+
+<section>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+            <header class="text-center">
+                <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Your Orders</h1>
+            </header>
+            <br><br>
+
+
+            <div>
+
+
+                {% for sale in sales %}
+
+                <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
+                    <div class="collapse-title text-lg font-medium">
+                        Final amount: $ <span class="text-md font-normal">{{ sale.sale_data.total }}</span>
+                        <br>
+                        Date: <span class="text-md font-normal">{{ sale.sale_data.created_at }}</span>
+                        <br>
+                        State: 
+                        {% if sale.sale_data.is_ready %}
+                            <div class="badge badge-success gap-2">
+                                <span class="">READY</span>
+                            </div>
+                        {% else %}
+                            <div class="badge badge-error gap-2">
+                                <span class="">PENDING</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="collapse-content">
+                        <div class="mt-8">
+                            <ul class="space-y-6">
+                                {% for cart_item in sale.carts_data %}
+
+
+                                <li class="flex items-center gap-6" id="{{ forloop.counter0 }}"
+                                    cart_id="{{ cart_item.cart_id }}">
+                                    <img src="{{ cart_item.image }}" alt="" class="h-24 w-24 rounded object-cover" />
+
+                                    <div>
+                                        <h3 class="text-md text-black font-medium">{{ cart_item.product.name }}</h3>
+
+                                        <dl class="mt-0.5 space-y-px text-sm text-gray-600">
+                                            <dt class="inline">Quantity:</dt>
+                                            <dd class="inline">{{ cart_item.quantity }} </dd>
+
+
+                                            {% if cart_item.toppings %}
+                                            <div>
+                                                <dt class="inline">Toppings:</dt>
+                                                {% for topping_cart in cart_item.toppings %}
+
+                                                {% if forloop.last %}
+                                                <dd class="inline">{{ topping_cart.topping_id.name }} </dd>
+                                                {% else %}
+                                                <dd class="inline">{{ topping_cart.topping_id.name }}, </dd>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+
+                                            {% if cart_item.extras %}
+                                            <div>
+                                                <dt class="inline">Extras:</dt>
+                                                {% for extra in cart_item.extras %}
+
+                                                {% if forloop.last %}
+                                                <dd class="inline">{{ extra.extra_id.name }} </dd>
+                                                {% else %}
+                                                <dd class="inline">{{ extra.extra_id.name }}, </dd>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </dl>
+                                    </div>
+
+                                    <div class="flex flex-1 flex-col gap-4">
+                                        <div class="flex flex-1 items-center justify-end gap-2 text-xs">
+                                            <strong>Date:</strong> {{ cart_item.date }}<br>
+                                        </div>
+
+                                        <div class="flex flex-1 items-center justify-end gap-2">
+                                            <form>
+                                                <label for="price_{{ forloop.counter0 }}" class="sr-only"> Price
+                                                </label>
+
+                                                $ <input type="text" min="1" value="{{ cart_item.total_final_price }}"
+                                                    id="price_{{ forloop.counter0 }}" readonly
+                                                    class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-sm text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                                            </form>
+
+                                        </div>
+
+
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <br>
+                {% endfor %}
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
